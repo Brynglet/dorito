@@ -6,4 +6,5 @@ import lombok.Data;
 public class Box {
     int nrOfTriangles;
     String color;
+    boolean visited;
 }

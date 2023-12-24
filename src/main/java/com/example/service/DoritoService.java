@@ -32,11 +32,15 @@ public class DoritoService {
         /* Read all games into memory for better speed when filtering. */
         allDoritoGames = doritoRepository.getDoritos();
 
+        /*
         DoritoGame doritoGame = allDoritoGames.get(0);
-
 
         DoritoSolver doritoSolver = new DoritoSolver(doritoGame);
         doritoSolver.solveDoritoGame();
+
+         */
+
+        DoritoGame doritoGame = new DoritoGame(4);
 
     }
 }
