@@ -1,22 +1,8 @@
 package com.example.domain;
 
-import com.example.exception.ApiError;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.ObjectUtils;
-
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-
-import static com.example.utility.Common.*;
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 public class CommonTest {
@@ -90,7 +76,7 @@ public class CommonTest {
         // System.out.println("kalle2");
 
         for (int i = 0; i < rows; i++) {
-            // 4 blackboxes ger rows=9 ...=9 körningar
+            // 4 blackboxes ger rows=9 ...=9 korningar
             //System.out.println("kalle3");
             for (int k = 0; k < columns; k++) {
                 //System.out.println("kalle4");
@@ -104,7 +90,7 @@ public class CommonTest {
 
         //System.out.println("kalle5");
         for (int i = rows-1; i >= 0; i--) {
-            // 4 blackboxes ger rows=9 ...=9 körningar
+            // 4 blackboxes ger rows=9 ...=9 korningar
             //System.out.println("kalle6");
             System.out.println("");
             for (int k = 0; k <columns ; k++) {

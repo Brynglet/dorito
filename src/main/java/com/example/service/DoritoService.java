@@ -1,46 +1,58 @@
 package com.example.service;
 
+import com.example.domain.Box;
 import com.example.domain.DoritoGame;
 import com.example.domain.DoritoResponse;
-import com.example.domain.Filter;
-import com.example.exception.ApiError;
-import com.example.repository.DoritoRepository;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
-
-import java.io.IOException;
-import java.time.ZonedDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.example.utility.Common.*;
 
 @Slf4j
 @Service
 public class DoritoService {
 
-    private final List<DoritoGame> allDoritoGames;
+    public DoritoResponse getDoritoResponse(int nrOfBlackBoxes) {
+        DoritoGame doritoGame = createDoritoGame(nrOfBlackBoxes);
+        System.out.println(doritoGame);
+        DoritoResponse doritoResponse = new DoritoResponse();
+        doritoResponse.setRespString("RESPSTR!");
+        return doritoResponse;
+    }
 
-    @Autowired
-    public DoritoService(DoritoRepository doritoRepository) throws IOException {
-        /* Read all games into memory for better speed when filtering. */
-        allDoritoGames = doritoRepository.getDoritos();
+    private DoritoGame createDoritoGame(int nrOfBlackBoxes) {
 
-        /*
-        DoritoGame doritoGame = allDoritoGames.get(0);
+        DoritoGame doritoGame = new DoritoGame();
 
-        DoritoSolver doritoSolver = new DoritoSolver(doritoGame);
-        doritoSolver.solveDoritoGame();
+        int rows = (nrOfBlackBoxes * 2) + 1;
+        int columns = rows;
+        Box[][] boxes = new Box[rows][columns];
 
-         */
+        for (int i = 0; i < rows; i++) {
+            // 4 blackboxes ger rows=9 ...=9 körningar
 
-        DoritoGame doritoGame = new DoritoGame(4);
+            for (int k = 0; k < columns; k++) {
+                Box box = new Box();
+                String color = getTheColor(i, k);
+                box.setColor(color);
+                box.setVisited(false);
+                boxes[i][k] = box;
+            }
+        }
 
+        doritoGame.setBoxes(boxes);
+        doritoGame.setNrOfBlackBoxes(nrOfBlackBoxes);
+        doritoGame.setSolutions(null); //todo
+        return doritoGame;
+    }
+
+    private String getTheColor(int i, int k) {
+        if (i%2 != 0 && k%2 != 0) {
+            return "black";
+        }
+
+        if (i%2 == 0 && k%2 == 0) {
+            return "grey"; //beslutsruta
+        }
+
+        return "coral"; //faktiska strecken
     }
 }
