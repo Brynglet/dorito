@@ -15,14 +15,8 @@ body {background-color: lightblue;}
 </head>
 <body onload="init()">
 
-<table>
-    <tr>
-        <td></td>
-        <td style="width:1210px">
-            <div id="chess_result_id" class="cbreplay"><%= (String)request.getAttribute("gameStr") %></div>
-        </td>
-        <td></td>
-    </tr>
+<table width="400px" height="400px" border="1">
+    <%= (String)request.getAttribute("doritoTable") %>
 </table>
 
 <script>
@@ -30,7 +24,7 @@ body {background-color: lightblue;}
     var pageForm = document.forms['form1'];
 
     function init() {
-        alert("init1");
+        //alert("init1");
     }
 
 </script>
