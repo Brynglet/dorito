@@ -22,11 +22,18 @@ public class DoritoSolverService {
         solver(0, 0, doritoGame, solveDoritoGames);
 
         System.out.println("zdtnow2:" + ZonedDateTime.now());
-        System.out.println("kalle solveDoritoGames.size:" + solveDoritoGames.size());
+        System.out.println("solveDoritoGames.size:" + solveDoritoGames.size());
         return solveDoritoGames;
     }
 
     private void solver(int prevCol, int prevRow, DoritoGame doritoGame, List<DoritoGame> solveDoritoGames) {
+
+        if ((prevCol == doritoGame.getNrOfColumns() - 1) && (prevRow == doritoGame.getNrOfRows() - 1)) {
+            //Solution found
+            solveDoritoGames.add(doritoGame);
+            return;
+        }
+
         goingUp(prevCol, prevRow, doritoGame, solveDoritoGames);
         goingRight(prevCol, prevRow, doritoGame, solveDoritoGames);
         goingDown(prevCol, prevRow, doritoGame, solveDoritoGames);
@@ -35,15 +42,6 @@ public class DoritoSolverService {
 
     private void goingUp(int prevCol, int prevRow, DoritoGame doritoGame, List<DoritoGame> solveDoritoGames) {
 
-        //System.out.println("up");
-
-        if ((prevCol == doritoGame.getNrOfColumns() - 1) && (prevRow == doritoGame.getNrOfRows() - 1)) {
-            //Solution found
-            solveDoritoGames.add(doritoGame);
-            //System.out.println("adding!");
-            return;
-        }
-
         if (prevRow == doritoGame.getNrOfRows() - 1) { //going to hit roof
             return;
         }
@@ -51,6 +49,7 @@ public class DoritoSolverService {
         if ("black".equalsIgnoreCase(doritoGame.getBoxes()[prevCol][prevRow + 1].getColor())) {
             return;
         }
+
         if (doritoGame.getBoxes()[prevCol][prevRow + 1].isVisited()) {
             return;
         }
@@ -71,6 +70,7 @@ public class DoritoSolverService {
         if ("black".equalsIgnoreCase(doritoGame.getBoxes()[prevCol][prevRow - 1].getColor())) {
             return;
         }
+
         if (doritoGame.getBoxes()[prevCol][prevRow - 1].isVisited()) {
             return;
         }
@@ -85,13 +85,6 @@ public class DoritoSolverService {
     private void goingRight(int prevCol, int prevRow, DoritoGame doritoGame, List<DoritoGame> solveDoritoGames) {
         //System.out.println("right");
 
-        if ((prevCol == doritoGame.getNrOfColumns() - 1) && (prevRow == doritoGame.getNrOfRows() - 1)) {
-            //Solution found
-            solveDoritoGames.add(doritoGame);
-            //System.out.println("adding!");
-            return;
-        }
-
         if (prevCol == doritoGame.getNrOfColumns() - 1) { //going to hit right side
             return;
         }
@@ -99,6 +92,7 @@ public class DoritoSolverService {
         if ("black".equalsIgnoreCase(doritoGame.getBoxes()[prevCol + 1][prevRow].getColor())) {
             return;
         }
+
         if (doritoGame.getBoxes()[prevCol + 1][prevRow].isVisited()) {
             return;
         }
@@ -120,6 +114,7 @@ public class DoritoSolverService {
         if ("black".equalsIgnoreCase(doritoGame.getBoxes()[prevCol - 1][prevRow].getColor())) {
             return;
         }
+
         if (doritoGame.getBoxes()[prevCol - 1][prevRow].isVisited()) {
             return;
         }
@@ -130,7 +125,6 @@ public class DoritoSolverService {
 
         solver(prevCol - 1, prevRow, newDoritoGame, solveDoritoGames);
     }
-
 
     private DoritoGame copyOldGame(DoritoGame doritoGame) {
 

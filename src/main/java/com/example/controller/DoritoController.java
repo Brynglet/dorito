@@ -34,9 +34,6 @@ public class DoritoController {
             //return ResponseEntity.ok(doritoResponse);
 
             String theResp = doritoResponse.getRespString();
-
-
-            //request.setAttribute("doritoTable", doritoResponse.getRespString());
             request.setAttribute("doritoTables",theResp);
             System.out.println("kalleend");
             return "dorito"; // Sends to dorito.jsp
