@@ -38,7 +38,7 @@ public class DoritoController {
             //request.setAttribute("doritoTable", doritoResponse.getRespString());
             request.setAttribute("doritoTables",theResp);
 
-            return "dorito2"; // Sends to dorito2.jsp
+            return "dorito"; // Sends to dorito.jsp
         } catch (Exception e) {
             log.error("ERR " + ZonedDateTime.now());
             throw new RuntimeException("doritoResponse Error:" + e.getMessage());

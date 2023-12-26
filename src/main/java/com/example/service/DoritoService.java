@@ -12,50 +12,14 @@ public class DoritoService {
 
     public DoritoResponse getDoritoResponse(int nrOfBlackBoxes) {
         DoritoResponse doritoResponse = new DoritoResponse();
-        DoritoGame doritoGame = getTheGame(nrOfBlackBoxes);
+        DoritoGame doritoGame = new DoritoGame(nrOfBlackBoxes);
 
         doritoResponse.setRespString(getResponseString(doritoGame));
         return doritoResponse;
     }
 
-    private DoritoGame getTheGame(int nrOfBlackBoxes) {
-        DoritoGame doritoGame = new DoritoGame();
-        doritoGame.setNrOfBlackBoxes(nrOfBlackBoxes);
 
-        int rows = (nrOfBlackBoxes * 2) + 1;
-        int columns = rows;
-        Box[][] boxes = new Box[rows][columns];
 
-        for (int i = 0; i < rows; i++) {
-            // 4 blackboxes ger rows=9 ...=9 körningar
-
-            for (int k = 0; k < columns; k++) {
-                Box box = new Box();
-                String color = getTheColor(i, k);
-                box.setColor(color);
-                box.setVisited(false);
-                boxes[i][k] = box;
-            }
-        }
-
-        doritoGame.setBoxes(boxes);
-        doritoGame.setSolutions(null); //todo
-
-        return doritoGame;
-    }
-
-    private String getTheColor(int i, int k) {
-
-        if (i % 2 != 0 && k % 2 != 0) {
-            return "black";
-        }
-
-        if (i % 2 == 0 && k % 2 == 0) {
-            return "grey"; //beslutsruta
-        }
-
-        return "coral"; //faktiska strecken
-    }
 
     private String getResponseString(DoritoGame doritoGame) {
 

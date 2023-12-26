@@ -4,7 +4,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-<title>Chessfish2</title>
+<title>Dorito</title>
 
 <style>
 body {background-color: lightblue;}
@@ -14,7 +14,6 @@ body {background-color: lightblue;}
 
 </head>
 <body onload="init()">
-
 
     <%= (String)request.getAttribute("doritoTables") %>
 
