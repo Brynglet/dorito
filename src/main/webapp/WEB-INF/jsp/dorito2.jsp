@@ -15,9 +15,8 @@ body {background-color: lightblue;}
 </head>
 <body onload="init()">
 
-<table width="400px" height="400px" border="1">
-    <%= (String)request.getAttribute("doritoTable") %>
-</table>
+
+    <%= (String)request.getAttribute("doritoTables") %>
 
 <script>
 

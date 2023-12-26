@@ -4,11 +4,8 @@ import com.example.domain.DoritoResponse;
 import com.example.service.DoritoService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -32,8 +29,14 @@ public class DoritoController {
         try {
 
             DoritoResponse doritoResponse = doritoService.getDoritoResponse(Integer.parseInt(nrOfBlackBoxes));
+
             //return ResponseEntity.ok(doritoResponse);
-            request.setAttribute("doritoTable", doritoResponse.getRespString());
+
+            String theResp = doritoResponse.getRespString();
+
+
+            //request.setAttribute("doritoTable", doritoResponse.getRespString());
+            request.setAttribute("doritoTables",theResp);
 
             return "dorito2"; // Sends to dorito2.jsp
         } catch (Exception e) {

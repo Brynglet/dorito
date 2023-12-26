@@ -65,6 +65,7 @@ public class DoritoService {
         int columns = rows;
 
         Box [][] boxes = doritoGame.getBoxes();
+        respSb.append("<table width=\"400px\" height=\"400px\" border=\"1\">");
         for (int i = rows-1; i >= 0; i--) {
             respSb.append("<tr>");
             for (int k = 0; k <columns ; k++) {
@@ -76,6 +77,8 @@ public class DoritoService {
             }
             respSb.append("</tr>");
         }
+        respSb.append("</table>");
+
         return respSb.toString();
     }
 
