@@ -25,7 +25,7 @@ public class DoritoService {
         boolean isValid = isValid(nrOfBlackBoxes);
 
         if (!isValid) {
-            doritoResponse.setRespString("Must be a sqaure nr !=0 and <= 100. Try again and best of luck.");
+            doritoResponse.setRespString("Must be a sqaure nr >0 and <= 100. Try again and best of luck.");
             return doritoResponse;
         }
 
@@ -51,17 +51,17 @@ public class DoritoService {
 
     private boolean isValid(int nrOfBlackBoxes) {
 
+        if (nrOfBlackBoxes <= 0  || nrOfBlackBoxes > 100) {
+            return false;
+        }
+
         double rootExact = Math.sqrt(nrOfBlackBoxes);
 
         int rootAppr = (int) Math.sqrt(nrOfBlackBoxes);
 
-        double res = rootExact - 0.0 - rootAppr;
+        double res = rootExact - rootAppr;
 
-        if (res > 100 || res != 0.0) {
-            return false;
-        }
-
-        return true;
+        return (res == 0.0);
     }
 
     private String getResponseString(DoritoGame doritoGame) {
