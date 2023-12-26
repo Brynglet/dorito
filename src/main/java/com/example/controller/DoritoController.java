@@ -26,6 +26,7 @@ public class DoritoController {
     //public ResponseEntity<DoritoResponse> doritoResponse(String nrOfBlackBoxes) {
         public String doritoResponse(HttpServletRequest request, @PathVariable(value = "nrOfBlackBoxes") String nrOfBlackBoxes) {
 
+        System.out.println("kallestart");
         try {
 
             DoritoResponse doritoResponse = doritoService.getDoritoResponse(Integer.parseInt(nrOfBlackBoxes));
@@ -37,7 +38,7 @@ public class DoritoController {
 
             //request.setAttribute("doritoTable", doritoResponse.getRespString());
             request.setAttribute("doritoTables",theResp);
-
+            System.out.println("kalleend");
             return "dorito"; // Sends to dorito.jsp
         } catch (Exception e) {
             log.error("ERR " + ZonedDateTime.now());

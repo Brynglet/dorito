@@ -3,8 +3,6 @@ package com.example.domain;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 public class DoritoGame {
@@ -13,7 +11,6 @@ public class DoritoGame {
     private int nrOfRows;
     private int nrOfColumns;
     private Box[][] boxes;
-    List<String> solutions;
 
     public DoritoGame(int nrOfBlackBoxes) {
 
