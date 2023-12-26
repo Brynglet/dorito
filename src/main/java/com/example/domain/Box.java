@@ -7,6 +7,4 @@ public class Box {
     int nrOfTriangles;
     String color;
     boolean visited;
-
-
 }
