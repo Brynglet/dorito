@@ -61,8 +61,13 @@ public class CommonTest {
         }
     }
 
-
-
+    @Test
+    public void testrand() {
+        for (int k = 0; k < 100; k++) {
+            int randNumber = (int) (Math.random() * 10);
+            System.out.println(randNumber);
+        }
+    }
     @Test
     public void testgm() {
 

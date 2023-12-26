@@ -26,7 +26,8 @@ public class DoritoController {
     //public ResponseEntity<DoritoResponse> doritoResponse(String nrOfBlackBoxes) {
         public String doritoResponse(HttpServletRequest request, @PathVariable(value = "nrOfBlackBoxes") String nrOfBlackBoxes) {
 
-        System.out.println("kallestart");
+        System.out.println("kallestart nrOfBlackBoxes:" + nrOfBlackBoxes);
+
         try {
 
             DoritoResponse doritoResponse = doritoService.getDoritoResponse(Integer.parseInt(nrOfBlackBoxes));

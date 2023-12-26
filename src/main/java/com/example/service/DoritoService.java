@@ -25,7 +25,7 @@ public class DoritoService {
         boolean isValid = isValid(nrOfBlackBoxes);
 
         if (!isValid) {
-            doritoResponse.setRespString("Must be a sqaure nr >0 and <= 100. Try again and best of luck.");
+            doritoResponse.setRespString("Must be a sqaure nr >0 and <=16. Try again and best of luck.");
             return doritoResponse;
         }
 
@@ -34,7 +34,9 @@ public class DoritoService {
         DoritoGame initialDoritoGame = new DoritoGame(nrOfBlackBoxes);
         respStr += getResponseString(initialDoritoGame);
 
-        List<DoritoGame> solvedDoritoGames = doritoSolverService.solveDoritoGames(initialDoritoGame);
+        List<DoritoGame> solvedDoritoGames = doritoSolverService.allPathsDoritoGames(initialDoritoGame);
+
+        //List<DoritoGame> solvedDoritoGames = doritoSolverService.solvedDoritoGames(allPathsDoritoGames);
 
         if (ObjectUtils.isNotEmpty(solvedDoritoGames)) {
             for (int k = 0; k < solvedDoritoGames.size(); k++) {
@@ -51,7 +53,7 @@ public class DoritoService {
 
     private boolean isValid(int nrOfBlackBoxes) {
 
-        if (nrOfBlackBoxes <= 0  || nrOfBlackBoxes > 100) {
+        if (nrOfBlackBoxes <= 0  || nrOfBlackBoxes > 16) {
             return false;
         }
 
@@ -77,7 +79,10 @@ public class DoritoService {
             respSb.append("<tr>");
             for (int k = 0; k <columns ; k++) {
                 String boxColor = "\"" + boxes[i][k].getColor() + "\"";
-                respSb.append("<td bgcolor=" + boxColor + "</td>");
+                //respSb.append("<td align=center valign=center color=yellow bgcolor=" + boxColor + ">" + printTrianles(boxes[i][k], i, k) + "</td>");
+
+                respSb.append("<td align=center valign=center style=\"color: red;\" bgcolor=" + boxColor + ">" + printTrianles(boxes[i][k], i, k) + "</td>");
+
             }
             respSb.append("</tr>");
         }
@@ -85,6 +90,25 @@ public class DoritoService {
         respSb.append("</table>");
 
         return respSb.toString();
+    }
+
+    private String printTrianles(Box box, int col, int row) {
+        if (col % 2 != 0 && row % 2 != 0) {
+            if (box.getNrOfTriangles() == 0) {
+                return "0";
+            }
+            if (box.getNrOfTriangles() == 1) {
+                return "1";
+            }
+            if (box.getNrOfTriangles() == 2) {
+                return "2";
+            }
+            if (box.getNrOfTriangles() == 3) {
+                return "3";
+            }
+        }
+
+        return "&nbsp&nbsp"; //for non black squares
     }
 }
 

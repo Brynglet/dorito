@@ -3,6 +3,7 @@ package com.example.service;
 import com.example.domain.Box;
 import com.example.domain.DoritoGame;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -12,7 +13,7 @@ import java.util.List;
 @Slf4j
 @Service
 public class DoritoSolverService {
-    public List<DoritoGame> solveDoritoGames(DoritoGame doritoGame) {
+    public List<DoritoGame> allPathsDoritoGames(DoritoGame doritoGame) {
 
         System.out.println("zdtnow1:" + ZonedDateTime.now());
         List<DoritoGame> solveDoritoGames = new ArrayList();
@@ -30,7 +31,11 @@ public class DoritoSolverService {
 
         if ((prevCol == doritoGame.getNrOfColumns() - 1) && (prevRow == doritoGame.getNrOfRows() - 1)) {
             //Solution found
-            solveDoritoGames.add(doritoGame);
+            if (isAcceptedDoritoGame(doritoGame)) {
+                solveDoritoGames.add(doritoGame);
+            } else {
+                doritoGame = null;
+            }
             return;
         }
 
@@ -120,6 +125,7 @@ public class DoritoSolverService {
         }
 
         DoritoGame newDoritoGame = copyOldGame(doritoGame);
+
         newDoritoGame.getBoxes()[prevCol - 1][prevRow].setColor("green");
         newDoritoGame.getBoxes()[prevCol - 1][prevRow].setVisited(true);
 
@@ -135,17 +141,50 @@ public class DoritoSolverService {
         Box[][] newBoxes = new Box[doritoGame.getNrOfColumns()][doritoGame.getNrOfRows()];
 
         for (int i = 0; i < doritoGame.getNrOfColumns(); i++) {
-            for (int k = 0; k < doritoGame.getNrOfColumns(); k++) {
-
+            for (int k = 0; k < doritoGame.getNrOfRows(); k++) {
                 Box box = new Box();
                 box.setVisited(doritoGame.getBoxes()[i][k].isVisited());
                 box.setColor(doritoGame.getBoxes()[i][k].getColor());
+                box.setNrOfTriangles(doritoGame.getBoxes()[i][k].getNrOfTriangles());
                 newBoxes[i][k] = box;
             }
             newDoritoGame.setBoxes(newBoxes);
         }
-
+        doritoGame = null;
         return newDoritoGame;
     }
+
+    private boolean isAcceptedDoritoGame(DoritoGame doritoGame) {
+        boolean ret = true;
+        for (int i = 0; i < doritoGame.getNrOfColumns(); i++) {
+            for (int k = 0; k < doritoGame.getNrOfRows(); k++) {
+                if ("black".equals(doritoGame.getBoxes()[i][k].getColor())) {
+                    if (doritoGame.getBoxes()[i][k].getNrOfTriangles() > 0) {
+                        /* funkar inte??
+                        int visit1 = doritoGame.getBoxes()[i-1][k].isVisited() ? 1 : 0;
+                        int visit2 = doritoGame.getBoxes()[i+1][k].isVisited() ? 1 : 0;
+                        int visit3 = doritoGame.getBoxes()[i][k+1].isVisited() ? 1 : 0;
+                        int visit4 = doritoGame.getBoxes()[i][k+1].isVisited() ? 1 : 0;
+                        int sum = visit1 + visit2 + visit3 + visit4;
+                        if (sum != doritoGame.getBoxes()[i][k].getNrOfTriangles()) {
+                            return false;
+                        }
+                         */
+                        int visit1 = "green".equals(doritoGame.getBoxes()[i-1][k].getColor()) ? 1 : 0;
+                        int visit2 = "green".equals(doritoGame.getBoxes()[i+1][k].getColor()) ? 1 : 0;
+                        int visit3 = "green".equals(doritoGame.getBoxes()[i][k-1].getColor()) ? 1 : 0;
+                        int visit4 = "green".equals(doritoGame.getBoxes()[i][k+1].getColor()) ? 1 : 0;
+
+                        int sum = visit1 + visit2 + visit3 + visit4;
+                        if (sum != doritoGame.getBoxes()[i][k].getNrOfTriangles()) {
+                            ret = false;
+                        }
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+
 }
 

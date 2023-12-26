@@ -27,11 +27,34 @@ public class DoritoGame {
                 Box box = new Box();
                 box.setVisited(false);
                 box.setColor(initBoxColor(i, k));
+                box.setNrOfTriangles(initNrOfTrianlges(i, k));
                 boxes[i][k] = box;
             }
         }
 
         this.setBoxes(boxes);
+    }
+
+    private int initNrOfTrianlges(int i, int k) {
+
+        /* %ellt lätt/med/svårt
+            List<Integer> easy = List.of(15, 6, 3); //  1,2,3 trianlges
+    List<Integer> medium = List.of(20, 8, 6); // 1,2,3 trianlges
+    List<Integer> hard = List.of(24, 12, 8); // 1,2,3 trianlges
+         */
+        if (i % 2 != 0 && k % 2 != 0) {
+            int randNumber = (int) (Math.random() * 100); //0-99
+
+            if (randNumber < 20) {
+                return 1;
+            } else if (randNumber < 28) {
+                return 2;
+            } else if (randNumber < 38) {
+                return 3;
+            }
+
+        }
+        return 0;
     }
 
     private String initBoxColor(int i, int k) {
