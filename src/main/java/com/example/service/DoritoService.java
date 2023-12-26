@@ -21,6 +21,14 @@ public class DoritoService {
     public DoritoResponse getDoritoResponse(int nrOfBlackBoxes) {
 
         DoritoResponse doritoResponse = new DoritoResponse();
+
+        boolean isValid = isValid(nrOfBlackBoxes);
+
+        if (!isValid) {
+            doritoResponse.setRespString("Must be a sqaure nr !=0 and <= 100. Try again and best of luck.");
+            return doritoResponse;
+        }
+
         String respStr = StringUtils.EMPTY;
 
         DoritoGame initialDoritoGame = new DoritoGame(nrOfBlackBoxes);
@@ -41,12 +49,27 @@ public class DoritoService {
         return doritoResponse;
     }
 
+    private boolean isValid(int nrOfBlackBoxes) {
+
+        double rootExact = Math.sqrt(nrOfBlackBoxes);
+
+        int rootAppr = (int) Math.sqrt(nrOfBlackBoxes);
+
+        double res = rootExact - 0.0 - rootAppr;
+
+        if (res > 100 || res != 0.0) {
+            return false;
+        }
+
+        return true;
+    }
+
     private String getResponseString(DoritoGame doritoGame) {
 
         StringBuilder respSb = new StringBuilder();
 
-        int rows = (doritoGame.getNrOfBlackBoxes() * 2) + 1;
-        int columns = rows;
+        int rows = doritoGame.getNrOfRows();
+        int columns = doritoGame.getNrOfColumns();
 
         Box [][] boxes = doritoGame.getBoxes();
         respSb.append("<table width=\"400px\" height=\"400px\" border=\"1\">");

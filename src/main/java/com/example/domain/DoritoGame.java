@@ -10,6 +10,8 @@ import java.util.List;
 public class DoritoGame {
 
     private int nrOfBlackBoxes;
+    private int nrOfRows;
+    private int nrOfColumns;
     private Box[][] boxes;
     List<String> solutions;
 
@@ -17,14 +19,15 @@ public class DoritoGame {
 
         this.setNrOfBlackBoxes(nrOfBlackBoxes);
 
-        int rows = (nrOfBlackBoxes * 2) + 1;
-        int columns = rows;
-        Box[][] boxes = new Box[rows][columns];
+        this.setNrOfRows((int)((Math.sqrt(nrOfBlackBoxes) * 2) + 1));
+        this.setNrOfColumns((int)((Math.sqrt(nrOfBlackBoxes) * 2) + 1));
 
-        for (int i = 0; i < rows; i++) {
+        Box[][] boxes = new Box[nrOfRows][nrOfColumns];
+
+        for (int i = 0; i < this.getNrOfRows(); i++) {
             // 4 blackboxes ger rows=9 ...=9 körningar
 
-            for (int k = 0; k < columns; k++) {
+            for (int k = 0; k < this.getNrOfColumns(); k++) {
                 Box box = new Box();
                 box.setVisited(false);
                 box.setColor(initBoxColor(i, k));
