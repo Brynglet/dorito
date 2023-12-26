@@ -26,7 +26,6 @@ public class DoritoGame {
 
         for (int i = 0; i < this.getNrOfRows(); i++) {
             // 4 blackboxes ger rows=9 ...=9 körningar
-
             for (int k = 0; k < this.getNrOfColumns(); k++) {
                 Box box = new Box();
                 box.setVisited(false);
