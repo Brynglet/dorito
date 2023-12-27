@@ -70,14 +70,15 @@ public class DoritoService {
 
         StringBuilder respSb = new StringBuilder();
 
-        int rows = doritoGame.getNrOfRows();
         int columns = doritoGame.getNrOfColumns();
+        int rows = doritoGame.getNrOfRows();
 
         Box [][] boxes = doritoGame.getBoxes();
         respSb.append("<table width=\"400px\" height=\"400px\" border=\"1\">");
-        for (int i = rows-1; i >= 0; i--) {
+        for (int i = 0; i <columns ; i++) {
             respSb.append("<tr>");
-            for (int k = 0; k <columns ; k++) {
+            for (int k = rows-1; k >= 0; k--) {
+
                 String boxColor = "\"" + boxes[i][k].getColor() + "\"";
                 //respSb.append("<td align=center valign=center color=yellow bgcolor=" + boxColor + ">" + printTrianles(boxes[i][k], i, k) + "</td>");
 
@@ -107,7 +108,6 @@ public class DoritoService {
                 return "3";
             }
         }
-
         return "&nbsp&nbsp"; //for non black squares
     }
 }

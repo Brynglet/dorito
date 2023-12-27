@@ -15,15 +15,16 @@ public class DoritoGame {
     public DoritoGame(int nrOfBlackBoxes) {
 
         this.setNrOfBlackBoxes(nrOfBlackBoxes);
-
-        this.setNrOfRows((int)((Math.sqrt(nrOfBlackBoxes) * 2) + 1));
         this.setNrOfColumns((int)((Math.sqrt(nrOfBlackBoxes) * 2) + 1));
+        this.setNrOfRows((int)((Math.sqrt(nrOfBlackBoxes) * 2) + 1));
 
         Box[][] boxes = new Box[nrOfRows][nrOfColumns];
 
-        for (int i = 0; i < this.getNrOfRows(); i++) {
-            // 4 blackboxes ger rows=9 ...=9 körningar
-            for (int k = 0; k < this.getNrOfColumns(); k++) {
+        for (int i = 0; i < this.getNrOfColumns(); i++) {
+
+            for (int k = 0; k < this.getNrOfRows(); k++) {
+                // 4 blackboxes ger rows=9 ...=9 körningar
+
                 Box box = new Box();
                 box.setVisited(false);
                 box.setColor(initBoxColor(i, k));
@@ -81,7 +82,6 @@ public class DoritoGame {
 
             if (true) return 0;
              */
-
 
             int randNumber = (int) (Math.random() * 100); //0-99
 

@@ -32,8 +32,6 @@ public class DoritoController {
 
             DoritoResponse doritoResponse = doritoService.getDoritoResponse(Integer.parseInt(nrOfBlackBoxes));
 
-            //return ResponseEntity.ok(doritoResponse);
-
             String theResp = doritoResponse.getRespString();
             request.setAttribute("doritoTables",theResp);
             System.out.println("kalleend");

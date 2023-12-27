@@ -3,7 +3,6 @@ package com.example.service;
 import com.example.domain.Box;
 import com.example.domain.DoritoGame;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -170,6 +169,7 @@ public class DoritoSolverService {
                             return false;
                         }
                          */
+
                         int visit1 = "green".equals(doritoGame.getBoxes()[i-1][k].getColor()) ? 1 : 0;
                         int visit2 = "green".equals(doritoGame.getBoxes()[i+1][k].getColor()) ? 1 : 0;
                         int visit3 = "green".equals(doritoGame.getBoxes()[i][k-1].getColor()) ? 1 : 0;
