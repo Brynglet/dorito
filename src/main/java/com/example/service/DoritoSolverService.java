@@ -12,13 +12,14 @@ import java.util.List;
 @Slf4j
 @Service
 public class DoritoSolverService {
-    public List<DoritoGame> allPathsDoritoGames(DoritoGame doritoGame) {
+
+    public static int SOLVED = 0;
+    public List<DoritoGame> solveDoritoGame(DoritoGame doritoGame) {
 
         System.out.println("zdtnow1:" + ZonedDateTime.now());
         List<DoritoGame> solveDoritoGames = new ArrayList();
 
-        doritoGame.getBoxes()[0][0].setColor("green");
-        doritoGame.getBoxes()[0][0].setVisited(true);
+        doritoGame.getBoxes()[0][0].setColor(4); //green
         solver(0, 0, doritoGame, solveDoritoGames);
 
         System.out.println("zdtnow2:" + ZonedDateTime.now());
@@ -28,20 +29,22 @@ public class DoritoSolverService {
 
     private void solver(int prevRow, int prevCol, DoritoGame doritoGame, List<DoritoGame> solveDoritoGames) {
 
-        if ((prevRow == doritoGame.getNrOfRows() - 1) && (prevCol == doritoGame.getNrOfColumns() - 1)) {
-            //Solution found
-            if (isAcceptedDoritoGame(doritoGame)) {
-                solveDoritoGames.add(doritoGame);
-            } else {
-                doritoGame = null;
+            if ((prevRow == doritoGame.getNrOfRows() - 1) && (prevCol == doritoGame.getNrOfColumns() - 1)) {
+                //Solution found
+                if (isAcceptedDoritoGame(doritoGame)) {
+                    solveDoritoGames.add(doritoGame);
+                    SOLVED++;
+                    System.out.println("SOLVED=" + SOLVED);
+                } else {
+                    //doritoGame = null;
+                }
+                return;
             }
-            return;
-        }
 
-        goingUp(prevRow, prevCol, doritoGame, solveDoritoGames);
-        goingRight(prevRow, prevCol, doritoGame, solveDoritoGames);
-        goingDown(prevRow, prevCol, doritoGame, solveDoritoGames);
-        goingLeft(prevRow, prevCol, doritoGame, solveDoritoGames);
+            goingUp(prevRow, prevCol, doritoGame, solveDoritoGames);
+            goingRight(prevRow, prevCol, doritoGame, solveDoritoGames);
+            goingDown(prevRow, prevCol, doritoGame, solveDoritoGames);
+            goingLeft(prevRow, prevCol, doritoGame, solveDoritoGames);
     }
 
     private void goingUp(int prevRow, int prevCol, DoritoGame doritoGame, List<DoritoGame> solveDoritoGames) {
@@ -50,17 +53,12 @@ public class DoritoSolverService {
             return;
         }
 
-        if ("black".equalsIgnoreCase(doritoGame.getBoxes()[prevRow+1][prevCol].getColor())) {
-            return;
-        }
-
-        if (doritoGame.getBoxes()[prevRow+1][prevCol].isVisited()) {
+        if (1 == doritoGame.getBoxes()[prevRow+1][prevCol].getColor() || 4 == doritoGame.getBoxes()[prevRow+1][prevCol].getColor()) {
             return;
         }
 
         DoritoGame newDoritoGame = copyOldGame(doritoGame);
-        newDoritoGame.getBoxes()[prevRow+1][prevCol].setColor("green");
-        newDoritoGame.getBoxes()[prevRow+1][prevCol].setVisited(true);
+        newDoritoGame.getBoxes()[prevRow+1][prevCol].setColor(4); //4 green = visited
 
         solver(prevRow+1, prevCol, newDoritoGame, solveDoritoGames);
     }
@@ -71,17 +69,12 @@ public class DoritoSolverService {
             return;
         }
 
-        if ("black".equalsIgnoreCase(doritoGame.getBoxes()[prevRow-1][prevCol].getColor())) {
-            return;
-        }
-
-        if (doritoGame.getBoxes()[prevRow-1][prevCol].isVisited()) {
+        if (1 == doritoGame.getBoxes()[prevRow-1][prevCol].getColor() || 4 == doritoGame.getBoxes()[prevRow-1][prevCol].getColor()) {
             return;
         }
 
         DoritoGame newDoritoGame = copyOldGame(doritoGame);
-        newDoritoGame.getBoxes()[prevRow-1][prevCol].setColor("green");
-        newDoritoGame.getBoxes()[prevRow-1][prevCol].setVisited(true);
+        newDoritoGame.getBoxes()[prevRow-1][prevCol].setColor(4); //4 green = visited
 
         solver(prevRow-1, prevCol, newDoritoGame, solveDoritoGames);
     }
@@ -93,17 +86,12 @@ public class DoritoSolverService {
             return;
         }
 
-        if ("black".equalsIgnoreCase(doritoGame.getBoxes()[prevRow][prevCol + 1].getColor())) {
-            return;
-        }
-
-        if (doritoGame.getBoxes()[prevRow][prevCol + 1].isVisited()) {
+        if (1 == doritoGame.getBoxes()[prevRow][prevCol + 1].getColor() || 4 == doritoGame.getBoxes()[prevRow][prevCol + 1].getColor()) {
             return;
         }
 
         DoritoGame newDoritoGame = copyOldGame(doritoGame);
-        newDoritoGame.getBoxes()[prevRow][prevCol + 1].setColor("green");
-        newDoritoGame.getBoxes()[prevRow][prevCol + 1].setVisited(true);
+        newDoritoGame.getBoxes()[prevRow][prevCol + 1].setColor(4); //4 green = visited
 
         solver(prevRow, prevCol + 1, newDoritoGame, solveDoritoGames);
     }
@@ -115,18 +103,13 @@ public class DoritoSolverService {
             return;
         }
 
-        if ("black".equalsIgnoreCase(doritoGame.getBoxes()[prevRow][prevCol - 1].getColor())) {
-            return;
-        }
-
-        if (doritoGame.getBoxes()[prevRow][prevCol - 1].isVisited()) {
+        if (1 == doritoGame.getBoxes()[prevRow][prevCol - 1].getColor() || 4 == doritoGame.getBoxes()[prevRow][prevCol - 1].getColor()) {
             return;
         }
 
         DoritoGame newDoritoGame = copyOldGame(doritoGame);
 
-        newDoritoGame.getBoxes()[prevRow][prevCol - 1].setColor("green");
-        newDoritoGame.getBoxes()[prevRow][prevCol - 1].setVisited(true);
+        newDoritoGame.getBoxes()[prevRow][prevCol - 1].setColor(4); //4 green = visited
 
         solver(prevRow, prevCol - 1, newDoritoGame, solveDoritoGames);
     }
@@ -142,7 +125,6 @@ public class DoritoSolverService {
         for (int i = 0; i < oldDoritoGame.getNrOfRows(); i++) {
             for (int k = 0; k < oldDoritoGame.getNrOfColumns(); k++) {
                 Box box = new Box();
-                box.setVisited(oldDoritoGame.getBoxes()[i][k].isVisited());
                 box.setColor(oldDoritoGame.getBoxes()[i][k].getColor());
                 box.setNrOfTriangles(oldDoritoGame.getBoxes()[i][k].getNrOfTriangles());
                 newBoxes[i][k] = box;
@@ -156,7 +138,7 @@ public class DoritoSolverService {
     private boolean isAcceptedDoritoGame(DoritoGame doritoGame) {
         for (int i = 0; i < doritoGame.getNrOfRows(); i++) {
             for (int k = 0; k < doritoGame.getNrOfColumns(); k++) {
-                if ("black".equals(doritoGame.getBoxes()[i][k].getColor())) {
+                if (1 == doritoGame.getBoxes()[i][k].getColor()) { //black
                     if (doritoGame.getBoxes()[i][k].getNrOfTriangles() > 0) {
 
                         /*
@@ -171,10 +153,15 @@ public class DoritoSolverService {
                         }
                         */
 
-                        int visit1 = "green".equals(doritoGame.getBoxes()[i-1][k].getColor()) ? 1 : 0; //under
-                        int visit2 = "green".equals(doritoGame.getBoxes()[i+1][k].getColor()) ? 1 : 0; //over
-                        int visit3 = "green".equals(doritoGame.getBoxes()[i][k-1].getColor()) ? 1 : 0; //left
-                        int visit4 = "green".equals(doritoGame.getBoxes()[i][k+1].getColor()) ? 1 : 0; //right
+            //            int visit1 = "green".equals(doritoGame.getBoxes()[i-1][k].getColor()) ? 1 : 0; //under
+            //            int visit2 = "green".equals(doritoGame.getBoxes()[i+1][k].getColor()) ? 1 : 0; //over
+            //            int visit3 = "green".equals(doritoGame.getBoxes()[i][k-1].getColor()) ? 1 : 0; //left
+            //            int visit4 = "green".equals(doritoGame.getBoxes()[i][k+1].getColor()) ? 1 : 0; //right
+
+                        int visit1 = 4 == doritoGame.getBoxes()[i-1][k].getColor() ? 1 : 0; //under
+                        int visit2 = 4 == doritoGame.getBoxes()[i+1][k].getColor() ? 1 : 0; //over
+                        int visit3 = 4 == doritoGame.getBoxes()[i][k-1].getColor() ? 1 : 0; //left
+                        int visit4 = 4 == doritoGame.getBoxes()[i][k+1].getColor() ? 1 : 0; //right
 
                         int sum = visit1 + visit2 + visit3 + visit4;
                         if (sum != doritoGame.getBoxes()[i][k].getNrOfTriangles()) {

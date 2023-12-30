@@ -21,12 +21,8 @@ public class DoritoGame {
         Box[][] boxes = new Box[this.getNrOfRows()][this.getNrOfColumns()];
 
         for (int i = 0; i < this.getNrOfRows(); i++) {
-
             for (int k = 0; k < this.getNrOfColumns(); k++) {
-                // 4 blackboxes ger rows=9 ...=9 körningar
-
                 Box box = new Box();
-                box.setVisited(false);
                 box.setColor(initBoxColor(i, k));
                 box.setNrOfTriangles(initNrOfTrianlges(i, k));
                 boxes[i][k] = box;
@@ -45,7 +41,8 @@ public class DoritoGame {
          */
         if (i % 2 != 0 && k % 2 != 0) {
 
-            boolean theDifficult = true;
+            boolean theDifficult = false;
+            boolean allZero = true;
             if (theDifficult) {
                 if (i == 1 && k == 1) {
                     return 2;
@@ -82,6 +79,8 @@ public class DoritoGame {
                 if (true) return 0;
             }
 
+            if (allZero) return 0;
+
             int randNumber = (int) (Math.random() * 100); //0-99
 
             if (randNumber < 20) {
@@ -96,13 +95,16 @@ public class DoritoGame {
         return 0;
     }
 
-    private String initBoxColor(int i, int k) {
+    private int initBoxColor(int i, int k) {
         if (i % 2 != 0 && k % 2 != 0) {
-            return "black";
+            return 1;
+            //return "black";
         }
         if (i % 2 == 0 && k % 2 == 0) {
-            return "grey"; //beslutsruta
+            return 2;
+            //return "grey"; //beslutsruta
         }
-        return "coral"; //faktiska strecken
+        return 3;
+        //return "coral"; //faktiska strecken
     }
 }

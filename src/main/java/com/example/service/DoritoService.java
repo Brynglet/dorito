@@ -4,7 +4,6 @@ import com.example.domain.Box;
 import com.example.domain.DoritoGame;
 import com.example.domain.DoritoResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,7 @@ public class DoritoService {
         boolean isValid = isValid(nrOfBlackBoxes);
 
         if (!isValid) {
-            doritoResponse.setRespString("Must be a sqaure nr >0 and <=16. Try again and best of luck.");
+            doritoResponse.setRespString("Must be a sqaure nr >0 and <=25. Try again and best of luck.");
             return doritoResponse;
         }
 
@@ -34,16 +33,20 @@ public class DoritoService {
         DoritoGame initialDoritoGame = new DoritoGame(nrOfBlackBoxes);
         respStr += getResponseString(initialDoritoGame);
 
-        List<DoritoGame> solvedDoritoGames = doritoSolverService.allPathsDoritoGames(initialDoritoGame);
+        List<DoritoGame> solvedList = doritoSolverService.solveDoritoGame(initialDoritoGame);
 
-        if (ObjectUtils.isNotEmpty(solvedDoritoGames)) {
-            for (int k = 0; k < solvedDoritoGames.size(); k++) {
-                DoritoGame solvedDoritogame = solvedDoritoGames.get(k);
+        /*
+        if (ObjectUtils.isNotEmpty(solvedList)) {
+            for (int k = 0; k < solvedList.size(); k++) {
+                DoritoGame solvedDoritogame = solvedList.get(k);
                 respStr += getResponseString(solvedDoritogame);
             }
         } else {
             respStr += "<br/><table><tr><td>NO SOLUTIONS</td></tr></table><br/>";
         }
+        */
+
+        respStr += "solutions:" + solvedList.size();
 
         doritoResponse.setRespString(respStr);
         return doritoResponse;
@@ -51,7 +54,7 @@ public class DoritoService {
 
     private boolean isValid(int nrOfBlackBoxes) {
 
-        if (nrOfBlackBoxes <= 0  || nrOfBlackBoxes > 16) {
+        if (nrOfBlackBoxes <= 0  || nrOfBlackBoxes > 25) {
             return false;
         }
 
@@ -75,7 +78,16 @@ public class DoritoService {
             respSb.append("<tr>");
             for (int k = 0; k < doritoGame.getNrOfColumns(); k++) {
 
-                String boxColor = "\"" + boxes[i][k].getColor() + "\"";
+
+                String theCol = "green";
+                if (boxes[i][k].getColor() == 1) {
+                    theCol = "black";
+                } else   if (boxes[i][k].getColor() == 2) {
+                    theCol = "grey";
+                }   if (boxes[i][k].getColor() == 3) {
+                    theCol = "coral";
+                }
+                String boxColor = "\"" + theCol + "\"";
 
                 respSb.append("<td align=center valign=center style=\"color: yellow;\" bgcolor=" + boxColor + ">" + printTrianles(boxes[i][k], i, k) + "</td>");
 

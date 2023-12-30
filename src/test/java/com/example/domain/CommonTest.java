@@ -86,7 +86,7 @@ public class CommonTest {
             for (int k = 0; k < columns; k++) {
                 //System.out.println("kalle4");
                 Box box = new Box();
-                box.setColor(getTheColor(i, k));
+                box.setColor(getInitTheColor(i, k));
                 boxes[i][k] = box;
             }
 
@@ -110,16 +110,16 @@ public class CommonTest {
 
     }
 
-private String getTheColor(int i, int k) {
+private int getInitTheColor(int i, int k) {
         if (i%2 != 0 && k%2 != 0) {
-        return "b";
+        return 1; //black
         }
 
         if (i%2 == 0 && k%2 == 0) {
-        return "g"; //beslutsruta
+        return 2;  //grey
         }
 
-        return "c"; //faktiska strecken
+        return 3; //coral
         }
 }
 /*
