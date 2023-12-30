@@ -36,8 +36,6 @@ public class DoritoService {
 
         List<DoritoGame> solvedDoritoGames = doritoSolverService.allPathsDoritoGames(initialDoritoGame);
 
-        //List<DoritoGame> solvedDoritoGames = doritoSolverService.solvedDoritoGames(allPathsDoritoGames);
-
         if (ObjectUtils.isNotEmpty(solvedDoritoGames)) {
             for (int k = 0; k < solvedDoritoGames.size(); k++) {
                 DoritoGame solvedDoritogame = solvedDoritoGames.get(k);
@@ -70,19 +68,18 @@ public class DoritoService {
 
         StringBuilder respSb = new StringBuilder();
 
-        int columns = doritoGame.getNrOfColumns();
-        int rows = doritoGame.getNrOfRows();
-
         Box [][] boxes = doritoGame.getBoxes();
+
         respSb.append("<table width=\"400px\" height=\"400px\" border=\"1\">");
-        for (int i = 0; i <columns ; i++) {
+        for (int i = doritoGame.getNrOfRows() - 1; i >= 0; i--) {
             respSb.append("<tr>");
-            for (int k = rows-1; k >= 0; k--) {
+            for (int k = 0; k < doritoGame.getNrOfColumns(); k++) {
 
                 String boxColor = "\"" + boxes[i][k].getColor() + "\"";
-                //respSb.append("<td align=center valign=center color=yellow bgcolor=" + boxColor + ">" + printTrianles(boxes[i][k], i, k) + "</td>");
 
-                respSb.append("<td align=center valign=center style=\"color: red;\" bgcolor=" + boxColor + ">" + printTrianles(boxes[i][k], i, k) + "</td>");
+                respSb.append("<td align=center valign=center style=\"color: yellow;\" bgcolor=" + boxColor + ">" + printTrianles(boxes[i][k], i, k) + "</td>");
+
+                //respSb.append("<td align=center valign=center style=\"color: red;\" bgcolor=blue" + ">" + i + ":" + k + "</td>");
 
             }
             respSb.append("</tr>");

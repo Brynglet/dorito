@@ -18,11 +18,11 @@ public class DoritoGame {
         this.setNrOfColumns((int)((Math.sqrt(nrOfBlackBoxes) * 2) + 1));
         this.setNrOfRows((int)((Math.sqrt(nrOfBlackBoxes) * 2) + 1));
 
-        Box[][] boxes = new Box[nrOfRows][nrOfColumns];
+        Box[][] boxes = new Box[this.getNrOfRows()][this.getNrOfColumns()];
 
-        for (int i = 0; i < this.getNrOfColumns(); i++) {
+        for (int i = 0; i < this.getNrOfRows(); i++) {
 
-            for (int k = 0; k < this.getNrOfRows(); k++) {
+            for (int k = 0; k < this.getNrOfColumns(); k++) {
                 // 4 blackboxes ger rows=9 ...=9 körningar
 
                 Box box = new Box();
@@ -45,43 +45,42 @@ public class DoritoGame {
          */
         if (i % 2 != 0 && k % 2 != 0) {
 
-            /*
-            Sätta  en fix dorito, Skrotis svåra
-           k är kolumn, i ör rad!!??
-            if (i == 1 && k == 1) {
-                return 2;
-            }
+            boolean theDifficult = true;
+            if (theDifficult) {
+                if (i == 1 && k == 1) {
+                    return 2;
+                }
 
-            if (k == 1 && i == 7) {
-                return 2;
-            }
+                if (i == 7 && k == 1) {
+                    return 2;
+                }
 
-            if (k == 7 && i == 1) {
-                return 2;
-            }
+                if (i == 3 && k == 3) {
+                    return 1;
+                }
 
-            if (k == 7 && i == 5) {
-                return 2;
-            }
+                if (i == 5 && k == 3) {
+                    return 1;
+                }
 
-            if (k == 7 && i == 7) {
-                return 2;
-            }
+                if (i == 7 && k == 3) {
+                    return 1;
+                }
 
-            if (k == 3 && i == 3) {
-                return 1;
-            }
+                if (i == 1 && k == 7) {
+                    return 2;
+                }
 
-            if (k == 3 && i == 5) {
-                return 1;
-            }
+                if (i == 5 && k == 7) {
+                    return 2;
+                }
 
-            if (k == 3 && i == 7) {
-                return 1;
-            }
+                if (i == 7 && k == 7) {
+                    return 2;
+                }
 
-            if (true) return 0;
-             */
+                if (true) return 0;
+            }
 
             int randNumber = (int) (Math.random() * 100); //0-99
 
