@@ -13,16 +13,15 @@ import java.util.List;
 @Service
 public class DoritoSolverService {
 
-    public static int SOLVED = 0;
     public List<DoritoGame> solveDoritoGame(DoritoGame doritoGame) {
 
-        System.out.println("zdtnow1:" + ZonedDateTime.now());
+        System.out.println("recursion1:" + ZonedDateTime.now());
         List<DoritoGame> solveDoritoGames = new ArrayList();
 
         doritoGame.getBoxes()[0][0].setColor(4); //green
         solver(0, 0, doritoGame, solveDoritoGames);
 
-        System.out.println("zdtnow2:" + ZonedDateTime.now());
+        System.out.println("recursion2:" + ZonedDateTime.now());
         System.out.println("solveDoritoGames.size:" + solveDoritoGames.size());
         return solveDoritoGames;
     }
@@ -33,10 +32,6 @@ public class DoritoSolverService {
                 //Solution found
                 if (isAcceptedDoritoGame(doritoGame)) {
                     solveDoritoGames.add(doritoGame);
-                    SOLVED++;
-                    System.out.println("SOLVED=" + SOLVED);
-                } else {
-                    //doritoGame = null;
                 }
                 return;
             }
@@ -45,6 +40,7 @@ public class DoritoSolverService {
             goingRight(prevRow, prevCol, doritoGame, solveDoritoGames);
             goingDown(prevRow, prevCol, doritoGame, solveDoritoGames);
             goingLeft(prevRow, prevCol, doritoGame, solveDoritoGames);
+
     }
 
     private void goingUp(int prevRow, int prevCol, DoritoGame doritoGame, List<DoritoGame> solveDoritoGames) {
@@ -64,7 +60,7 @@ public class DoritoSolverService {
     }
 
     private void goingDown(int prevRow, int prevCol, DoritoGame doritoGame, List<DoritoGame> solveDoritoGames) {
-        //System.out.println("down");
+
         if (prevRow == 0) { //going to hit floor
             return;
         }
@@ -80,7 +76,6 @@ public class DoritoSolverService {
     }
 
     private void goingRight(int prevRow, int prevCol, DoritoGame doritoGame, List<DoritoGame> solveDoritoGames) {
-        //System.out.println("right");
 
         if (prevCol == doritoGame.getNrOfColumns() - 1) { //going to hit right side
             return;
@@ -97,7 +92,6 @@ public class DoritoSolverService {
     }
 
     private void goingLeft(int prevRow, int prevCol, DoritoGame doritoGame, List<DoritoGame> solveDoritoGames) {
-        //System.out.println("left");
 
         if (prevCol == 0) { //going to hit left side
             return;
@@ -140,24 +134,6 @@ public class DoritoSolverService {
             for (int k = 0; k < doritoGame.getNrOfColumns(); k++) {
                 if (1 == doritoGame.getBoxes()[i][k].getColor()) { //black
                     if (doritoGame.getBoxes()[i][k].getNrOfTriangles() > 0) {
-
-                        /*
-                        funkar inte??
-                        int visit1 = doritoGame.getBoxes()[i-1][k].isVisited() ? 1 : 0;
-                        int visit2 = doritoGame.getBoxes()[i+1][k].isVisited() ? 1 : 0;
-                        int visit3 = doritoGame.getBoxes()[i][k+1].isVisited() ? 1 : 0;
-                        int visit4 = doritoGame.getBoxes()[i][k+1].isVisited() ? 1 : 0;
-                        int sum = visit1 + visit2 + visit3 + visit4;
-                        if (sum != doritoGame.getBoxes()[i][k].getNrOfTriangles()) {
-                            return false;
-                        }
-                        */
-
-            //            int visit1 = "green".equals(doritoGame.getBoxes()[i-1][k].getColor()) ? 1 : 0; //under
-            //            int visit2 = "green".equals(doritoGame.getBoxes()[i+1][k].getColor()) ? 1 : 0; //over
-            //            int visit3 = "green".equals(doritoGame.getBoxes()[i][k-1].getColor()) ? 1 : 0; //left
-            //            int visit4 = "green".equals(doritoGame.getBoxes()[i][k+1].getColor()) ? 1 : 0; //right
-
                         int visit1 = 4 == doritoGame.getBoxes()[i-1][k].getColor() ? 1 : 0; //under
                         int visit2 = 4 == doritoGame.getBoxes()[i+1][k].getColor() ? 1 : 0; //over
                         int visit3 = 4 == doritoGame.getBoxes()[i][k-1].getColor() ? 1 : 0; //left

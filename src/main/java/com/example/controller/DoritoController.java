@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import com.example.domain.DoritoResponse;
 import com.example.service.DoritoService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -23,18 +22,18 @@ public class DoritoController {
     }
 
     @GetMapping("/dorito/{nrOfBlackBoxes}")
-    //public ResponseEntity<DoritoResponse> doritoResponse(String nrOfBlackBoxes) {
         public String doritoResponse(HttpServletRequest request, @PathVariable(value = "nrOfBlackBoxes") String nrOfBlackBoxes) {
 
         System.out.println("kallestart nrOfBlackBoxes:" + nrOfBlackBoxes);
+        System.out.println("kalleStart ZDTNOW:" + ZonedDateTime.now());
 
         try {
 
-            DoritoResponse doritoResponse = doritoService.getDoritoResponse(Integer.parseInt(nrOfBlackBoxes));
+            String theResp = doritoService.getDoritoResponse(Integer.parseInt(nrOfBlackBoxes));
 
-            String theResp = doritoResponse.getRespString();
             request.setAttribute("doritoTables",theResp);
-            System.out.println("kalleend");
+            System.out.println("kallesEnd ZDTNOW:" + ZonedDateTime.now());
+
             return "dorito"; // Sends to dorito.jsp
         } catch (Exception e) {
             log.error("ERR " + ZonedDateTime.now());
