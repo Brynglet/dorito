@@ -18,6 +18,8 @@ public class DoritoGame {
         this.setNrOfColumns((int)((Math.sqrt(nrOfBlackBoxes) * 2) + 1));
         this.setNrOfRows((int)((Math.sqrt(nrOfBlackBoxes) * 2) + 1));
 
+        System.out.println("this.getNrOfColumns:" + this.getNrOfColumns());
+
         Box[][] boxes = new Box[this.getNrOfRows()][this.getNrOfColumns()];
 
         for (int i = 0; i < this.getNrOfRows(); i++) {
@@ -83,11 +85,11 @@ public class DoritoGame {
 
             int randNumber = (int) (Math.random() * 100); //0-99
 
-            if (randNumber < 20) {
+            if (randNumber < 23) {
                 return 1;
-            } else if (randNumber < 28) {
+            } else if (randNumber < 29) {
                 return 2;
-            } else if (randNumber < 38) {
+            } else if (randNumber < 34) {
                 return 3;
             }
 

@@ -22,7 +22,7 @@ public class DoritoService {
         boolean isValid = isValid(nrOfBlackBoxes);
 
         if (!isValid) {
-            return "Must be a sqaure nr >0 and <=36. Try again and best of luck.";
+            return "Must be a sqaure nr >0 and <=100. Try again and best of luck.";
         }
 
         String respStr = StringUtils.EMPTY;
@@ -34,21 +34,24 @@ public class DoritoService {
 
         respStr += "<br/><table><tr><td>Solutions:" + solvedList.size() + "</td></tr></table><br/>";
 
-        if (ObjectUtils.isNotEmpty(solvedList)) {
-            for (int k = 0; k < solvedList.size(); k++) {
-                DoritoGame solvedDoritogame = solvedList.get(k);
-                respStr += getResponseString(solvedDoritogame);
-            }
-        }
+   //     if (true) {
+   //         return respStr;
+   //     }
 
-        respStr += "solutions:" + solvedList.size();
+        //if (ObjectUtils.isNotEmpty(solvedList)) {
+        if (solvedList.size() < 5000) {
+              for (int k = 0; k < solvedList.size(); k++) {
+               DoritoGame solvedDoritogame = solvedList.get(k);
+               respStr += getResponseString(solvedDoritogame);
+           }
+        }
 
         return respStr;
     }
 
     private boolean isValid(int nrOfBlackBoxes) {
 
-        if (nrOfBlackBoxes <= 0  || nrOfBlackBoxes > 36) {
+        if (nrOfBlackBoxes <= 0  || nrOfBlackBoxes > 100) {
             return false;
         }
 
