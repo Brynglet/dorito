@@ -21,9 +21,9 @@ public class DoritoSolverService {
 
         List<DoritoGame> solvedDoritoGames = new ArrayList<>();
 
-        //Recurion start
+        //Recursion start
         doStep(DirectionEnum.DOWN, 0, 0, doritoGame, solvedDoritoGames);
-        //Recurion end
+        //Recursion end
 
         Long durationMs = ZonedDateTime.now().toInstant().toEpochMilli() - before.toInstant().toEpochMilli();
 
