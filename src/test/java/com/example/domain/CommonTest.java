@@ -51,14 +51,6 @@ public class CommonTest {
         }
         System.out.println("nrOfDashes:" + nrOfDashes);
 
-        int nrOfBlackBoxes = 4;
-        int rows = (nrOfBlackBoxes * 2) + 1;
-
-        Box[][] boxes = new Box[rows][rows];
-
-        for (int i = 0; i < rows; i++) {
-            System.out.println("kallei");
-        }
     }
 
     @Test
@@ -71,42 +63,30 @@ public class CommonTest {
     @Test
     public void testgm() {
 
-        //System.out.println("kalle1");
         int nrOfBlackBoxes = 8;
         int rows = (nrOfBlackBoxes * 2) + 1;
 
         Box[][] boxes = new Box[rows][rows];
 
         int columns = rows;
-        // System.out.println("kalle2");
 
         for (int i = 0; i < rows; i++) {
             // 4 blackboxes ger rows=9 ...=9 korningar
-            //System.out.println("kalle3");
             for (int k = 0; k < columns; k++) {
-                //System.out.println("kalle4");
                 Box box = new Box();
                 box.setColorEnum(getInitTheColor(i, k));
                 boxes[i][k] = box;
             }
 
         }
-        System.out.println("");
 
-        //System.out.println("kalle5");
         for (int i = rows-1; i >= 0; i--) {
             // 4 blackboxes ger rows=9 ...=9 korningar
-            //System.out.println("kalle6");
-            System.out.println("");
             for (int k = 0; k <columns ; k++) {
-                //System.out.println("kalle7");
-                //System.out.println("row" + i + " column" + k);
                 System.out.print(" " + boxes[i][k].getColorEnum());
             }
 
         }
-        System.out.println("");
-        System.out.println("");
 
     }
 

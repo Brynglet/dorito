@@ -2,8 +2,10 @@ package com.example.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Data
+@Slf4j
 @NoArgsConstructor
 public class DoritoGame {
 
@@ -20,7 +22,7 @@ public class DoritoGame {
         this.setNrOfRows((int)((Math.sqrt(this.getNrOfBlackBoxesInt()) * 2) + 1));
         this.setNrOfColumns((int)((Math.sqrt(this.getNrOfBlackBoxesInt()) * 2) + 1));
 
-        System.out.println("this.getNrOfColumns:" + this.getNrOfColumns());
+        log.info("this.getNrOfColumns:" + this.getNrOfColumns());
 
         Box[][] boxes = new Box[this.getNrOfRows()][this.getNrOfColumns()];
 
@@ -28,7 +30,7 @@ public class DoritoGame {
             for (int k = 0; k < this.getNrOfColumns(); k++) {
                 Box box = new Box();
                 box.setColorEnum(initBoxColor(i, k));
-                box.setNrOfTriangles(initNrOfTrianlges(i, k));
+                box.setNrOfTriangles(initNrOfTriangles(i, k));
                 boxes[i][k] = box;
             }
         }
@@ -36,13 +38,8 @@ public class DoritoGame {
         this.setBoxes(boxes);
     }
 
-    private int initNrOfTrianlges(int i, int k) {
+    private int initNrOfTriangles(int i, int k) {
 
-        /* %ellt lätt/med/svårt
-            List<Integer> easy = List.of(15, 6, 3); //  1,2,3 trianlges
-    List<Integer> medium = List.of(20, 8, 6); // 1,2,3 trianlges
-    List<Integer> hard = List.of(24, 12, 8); // 1,2,3 trianlges
-         */
         if (i % 2 != 0 && k % 2 != 0) {
 
             boolean theDifficult = false;

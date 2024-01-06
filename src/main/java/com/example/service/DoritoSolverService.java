@@ -18,7 +18,7 @@ public class DoritoSolverService {
     public List<DoritoGame> solveDoritoGame(DoritoGame doritoGame) {
 
         ZonedDateTime before = ZonedDateTime.now();
-        List<DoritoGame> solvedDoritoGames = new ArrayList();
+        List<DoritoGame> solvedDoritoGames = new ArrayList<>();
 
         doStep(DirectionEnum.DOWN, 0, 0, doritoGame, solvedDoritoGames);
 
@@ -29,12 +29,6 @@ public class DoritoSolverService {
         return solvedDoritoGames;
     }
 
-    /*
-    1 underifrån
-	2 vänsterifrån
-	3 överifrån
-	4 högerifrån
-     */
     private void doStep(DirectionEnum directionEnum, int newRow, int newCol, DoritoGame doritoGame, List<DoritoGame> solvedDoritoGames) {
 
         //black or visited
