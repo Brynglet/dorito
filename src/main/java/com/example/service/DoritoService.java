@@ -42,15 +42,7 @@ public class DoritoService {
             respSb.append("<tr>");
             for (int k = 0; k < doritoGame.getNrOfColumns(); k++) {
                 theBox = boxes[i][k];
-                String theCol = "green";
-                if (ColorEnum.BLACK.equals(theBox.getColorEnum())) {
-                    theCol = "black";
-                } else if (ColorEnum.GREY.equals(theBox.getColorEnum())) {
-                    theCol = "grey";
-                } else if (ColorEnum.CORAL.equals(theBox.getColorEnum())) {
-                    theCol = "coral";
-                }
-                String boxColor = "\"" + theCol + "\"";
+                String boxColor = "\"" + theBox.getColorEnum().getColorEnumStr() + "\"";
                 respSb.append("<td align=center valign=center style=\"color: yellow;\" bgcolor=");
                 respSb.append(boxColor);
                 respSb.append(">");

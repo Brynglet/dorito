@@ -29,7 +29,7 @@ public class DoritoSolverService {
         return solvedDoritoGames;
     }
 
-    private void doStep(DirectionEnum directionEnum, int newRow, int newCol, DoritoGame doritoGame, List<DoritoGame> solvedDoritoGames) {
+    private void doStep(DirectionEnum cameFrom, int newRow, int newCol, DoritoGame doritoGame, List<DoritoGame> solvedDoritoGames) {
 
         //black or visited
         if (ColorEnum.BLACK.equals(doritoGame.getBoxes()[newRow][newCol].getColorEnum()) || ColorEnum.GREEN.equals(doritoGame.getBoxes()[newRow][newCol].getColorEnum())) {
@@ -51,22 +51,22 @@ public class DoritoSolverService {
             return;
         }
 
-        if (DirectionEnum.DOWN.equals(directionEnum)) { //came from down. No need to go down again.
-            if (newRow+1 < newDoritoGame.getNrOfRows()) doStep(DirectionEnum.DOWN,newRow+1, newCol, newDoritoGame, solvedDoritoGames); //gå uppåt
-            if (newCol+1 < newDoritoGame.getNrOfColumns()) doStep(DirectionEnum.LEFT,newRow, newCol+1, newDoritoGame, solvedDoritoGames); //gå höger
-            if (newCol-1 > -1) doStep(DirectionEnum.RIGHT,newRow, newCol-1, newDoritoGame, solvedDoritoGames); //gå vänster
-        } else if (DirectionEnum.UP.equals(directionEnum)) { //came from up. No need to go up again.
-            if (newCol+1 < newDoritoGame.getNrOfColumns()) doStep(DirectionEnum.LEFT,newRow, newCol+1, newDoritoGame, solvedDoritoGames); //gå höger
-            if (newRow-1 > -1) doStep(DirectionEnum.UP,newRow-1, newCol, newDoritoGame, solvedDoritoGames); //gå neråt
-            if (newCol-1 > -1) doStep(DirectionEnum.RIGHT,newRow, newCol-1, newDoritoGame, solvedDoritoGames); //gå vänster
-        } else if (DirectionEnum.LEFT.equals(directionEnum)) { //came from left. No go to check left again.
-            if (newRow+1 < newDoritoGame.getNrOfRows()) doStep(DirectionEnum.DOWN,newRow+1, newCol, newDoritoGame, solvedDoritoGames); //gå uppåt
-            if (newCol+1 < newDoritoGame.getNrOfColumns()) doStep(DirectionEnum.LEFT,newRow, newCol+1, newDoritoGame, solvedDoritoGames); //gå höger
-            if (newRow-1 > -1) doStep(DirectionEnum.UP,newRow-1, newCol, newDoritoGame, solvedDoritoGames); //gå neråt
-        } else if (DirectionEnum.RIGHT.equals(directionEnum)) { //came from right. No go to check right again.
-            if (newRow+1 < newDoritoGame.getNrOfRows()) doStep(DirectionEnum.DOWN,newRow+1, newCol, newDoritoGame, solvedDoritoGames); //gå uppåt
-            if (newRow-1 > -1) doStep(DirectionEnum.UP,newRow-1, newCol, newDoritoGame, solvedDoritoGames); //gå neråt
-            if (newCol-1 > -1) doStep(DirectionEnum.RIGHT,newRow, newCol-1, newDoritoGame, solvedDoritoGames); //gå vänster
+        if (DirectionEnum.DOWN.equals(cameFrom)) {
+            if (newRow+1 < newDoritoGame.getNrOfRows()) doStep(DirectionEnum.DOWN,newRow+1, newCol, newDoritoGame, solvedDoritoGames); //go up
+            if (newCol+1 < newDoritoGame.getNrOfColumns()) doStep(DirectionEnum.LEFT,newRow, newCol+1, newDoritoGame, solvedDoritoGames); //go right
+            if (newCol-1 > -1) doStep(DirectionEnum.RIGHT,newRow, newCol-1, newDoritoGame, solvedDoritoGames); //go left
+        } else if (DirectionEnum.UP.equals(cameFrom)) {
+            if (newCol+1 < newDoritoGame.getNrOfColumns()) doStep(DirectionEnum.LEFT,newRow, newCol+1, newDoritoGame, solvedDoritoGames); //go right
+            if (newRow-1 > -1) doStep(DirectionEnum.UP,newRow-1, newCol, newDoritoGame, solvedDoritoGames); //go down
+            if (newCol-1 > -1) doStep(DirectionEnum.RIGHT,newRow, newCol-1, newDoritoGame, solvedDoritoGames); //go left
+        } else if (DirectionEnum.LEFT.equals(cameFrom)) {
+            if (newRow+1 < newDoritoGame.getNrOfRows()) doStep(DirectionEnum.DOWN,newRow+1, newCol, newDoritoGame, solvedDoritoGames); //go up
+            if (newCol+1 < newDoritoGame.getNrOfColumns()) doStep(DirectionEnum.LEFT,newRow, newCol+1, newDoritoGame, solvedDoritoGames); //go right
+            if (newRow-1 > -1) doStep(DirectionEnum.UP,newRow-1, newCol, newDoritoGame, solvedDoritoGames); //go down
+        } else if (DirectionEnum.RIGHT.equals(cameFrom)) {
+            if (newRow+1 < newDoritoGame.getNrOfRows()) doStep(DirectionEnum.DOWN,newRow+1, newCol, newDoritoGame, solvedDoritoGames); //go up
+            if (newRow-1 > -1) doStep(DirectionEnum.UP,newRow-1, newCol, newDoritoGame, solvedDoritoGames); //go down
+            if (newCol-1 > -1) doStep(DirectionEnum.RIGHT,newRow, newCol-1, newDoritoGame, solvedDoritoGames); //go left
         }
 
     }
@@ -78,16 +78,17 @@ public class DoritoSolverService {
         newDoritoGame.setNrOfRows(oldDoritoGame.getNrOfRows());
         newDoritoGame.setNrOfColumns(oldDoritoGame.getNrOfColumns());
         Box[][] newBoxes = new Box[oldDoritoGame.getNrOfRows()][oldDoritoGame.getNrOfColumns()];
-
+        Box box;
         for (int i = 0; i < oldDoritoGame.getNrOfRows(); i++) {
             for (int k = 0; k < oldDoritoGame.getNrOfColumns(); k++) {
-                Box box = new Box();
+                box = new Box();
                 box.setColorEnum(oldDoritoGame.getBoxes()[i][k].getColorEnum());
                 box.setNrOfTriangles(oldDoritoGame.getBoxes()[i][k].getNrOfTriangles());
                 newBoxes[i][k] = box;
             }
             newDoritoGame.setBoxes(newBoxes);
         }
+        oldDoritoGame = null;
         return newDoritoGame;
     }
 
