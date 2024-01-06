@@ -3,9 +3,6 @@ package com.example.service;
 import com.example.domain.Box;
 import com.example.domain.DoritoGame;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,54 +11,20 @@ import java.util.List;
 @Service
 public class DoritoService {
 
-    @Autowired
-    private DoritoSolverService doritoSolverService;
+    public String getDoritoResponse(DoritoGame initialDoritoGame, List<DoritoGame> solvedDoritoGames) {
 
-    public String getDoritoResponse(int nrOfBlackBoxes) {
+        String respStr = getResponseString(initialDoritoGame);
 
-        boolean isValid = isValid(nrOfBlackBoxes);
+        respStr += "<br/><table><tr><td>Solutions:" + solvedDoritoGames.size() + "</td></tr></table><br/>";
 
-        if (!isValid) {
-            return "Must be a sqaure nr >0 and <=100. Try again and best of luck.";
-        }
-
-        String respStr = StringUtils.EMPTY;
-
-        DoritoGame initialDoritoGame = new DoritoGame(nrOfBlackBoxes);
-        respStr += getResponseString(initialDoritoGame);
-
-        List<DoritoGame> solvedList = doritoSolverService.solveDoritoGame(initialDoritoGame);
-
-        respStr += "<br/><table><tr><td>Solutions:" + solvedList.size() + "</td></tr></table><br/>";
-
-   //     if (true) {
-   //         return respStr;
-   //     }
-
-        //if (ObjectUtils.isNotEmpty(solvedList)) {
-        if (solvedList.size() < 5000) {
-              for (int k = 0; k < solvedList.size(); k++) {
-               DoritoGame solvedDoritogame = solvedList.get(k);
+        if (solvedDoritoGames.size() < 5000) {
+              for (int k = 0; k < solvedDoritoGames.size(); k++) {
+               DoritoGame solvedDoritogame = solvedDoritoGames.get(k);
                respStr += getResponseString(solvedDoritogame);
            }
         }
 
         return respStr;
-    }
-
-    private boolean isValid(int nrOfBlackBoxes) {
-
-        if (nrOfBlackBoxes <= 0  || nrOfBlackBoxes > 100) {
-            return false;
-        }
-
-        double rootExact = Math.sqrt(nrOfBlackBoxes);
-
-        int rootAppr = (int) Math.sqrt(nrOfBlackBoxes);
-
-        double res = rootExact - rootAppr;
-
-        return (res == 0.0);
     }
 
     private String getResponseString(DoritoGame doritoGame) {
@@ -111,5 +74,6 @@ public class DoritoService {
         }
         return "&nbsp&nbsp"; //for non black squares
     }
+
 }
 

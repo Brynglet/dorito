@@ -7,16 +7,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DoritoGame {
 
-    private int nrOfBlackBoxes;
+    private int nrOfBlackBoxesInt;
     private int nrOfRows;
     private int nrOfColumns;
     private Box[][] boxes;
 
-    public DoritoGame(int nrOfBlackBoxes) {
+    public DoritoGame(String nrOfBlackBoxesStr) {
 
-        this.setNrOfBlackBoxes(nrOfBlackBoxes);
-        this.setNrOfColumns((int)((Math.sqrt(nrOfBlackBoxes) * 2) + 1));
-        this.setNrOfRows((int)((Math.sqrt(nrOfBlackBoxes) * 2) + 1));
+        Common.validateInput(nrOfBlackBoxesStr);
+
+        this.setNrOfBlackBoxesInt(Integer.parseInt(nrOfBlackBoxesStr));
+        this.setNrOfRows((int)((Math.sqrt(this.getNrOfBlackBoxesInt()) * 2) + 1));
+        this.setNrOfColumns((int)((Math.sqrt(this.getNrOfBlackBoxesInt()) * 2) + 1));
 
         System.out.println("this.getNrOfColumns:" + this.getNrOfColumns());
 

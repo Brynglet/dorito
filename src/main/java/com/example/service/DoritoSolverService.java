@@ -14,14 +14,17 @@ import java.util.List;
 public class DoritoSolverService {
 
     public List<DoritoGame> solveDoritoGame(DoritoGame doritoGame) {
-        System.out.println("recursion1:" + ZonedDateTime.now());
-        List<DoritoGame> solveDoritoGames = new ArrayList();
 
-        go(1, 0, 0, doritoGame, solveDoritoGames);
+        ZonedDateTime before = ZonedDateTime.now();
+        List<DoritoGame> solvedDoritoGames = new ArrayList();
 
-        System.out.println("recursion2:" + ZonedDateTime.now());
-        System.out.println("solveDoritoGames.size:" + solveDoritoGames.size());
-        return solveDoritoGames;
+        doStep(1, 0, 0, doritoGame, solvedDoritoGames);
+
+        Long durationMs = ZonedDateTime.now().toInstant().toEpochMilli() - before.toInstant().toEpochMilli();
+
+        log.info("recursion time:" + (durationMs.doubleValue() / 1000) + " seconds");
+
+        return solvedDoritoGames;
     }
 
     /*
@@ -30,7 +33,7 @@ public class DoritoSolverService {
 	3 överifrån
 	4 högerifrån
      */
-    private void go(int commingFrom, int newRow, int newCol, DoritoGame doritoGame, List<DoritoGame> solveDoritoGames) {
+    private void doStep(int commingFrom, int newRow, int newCol, DoritoGame doritoGame, List<DoritoGame> solvedDoritoGames) {
 
         //black or visited
         if (1 == doritoGame.getBoxes()[newRow][newCol].getColor() || 4 == doritoGame.getBoxes()[newRow][newCol].getColor()) {
@@ -45,7 +48,7 @@ public class DoritoSolverService {
             if ((newRow == newDoritoGame.getNrOfRows() - 1) && (newCol == newDoritoGame.getNrOfColumns() - 1)) {
                 //possible Solution found
                 if (isAcceptedDoritoGame(newDoritoGame)) {
-                    solveDoritoGames.add(newDoritoGame);
+                    solvedDoritoGames.add(newDoritoGame);
                 }
                 return;
             }
@@ -60,10 +63,10 @@ public class DoritoSolverService {
 	3 överifrån
 	4 högerifrån
      */
-            if (newRow+1 < newDoritoGame.getNrOfRows()) go(1,newRow+1, newCol, newDoritoGame, solveDoritoGames); //gå uppåt
-            if (newCol+1 < newDoritoGame.getNrOfColumns()) go(2,newRow, newCol+1, newDoritoGame, solveDoritoGames); //gå höger
-            //go(3,newRow-1, newCol, newDoritoGame, solveDoritoGames); //gå neråt
-            if (newCol-1 > -1) go(4,newRow, newCol-1, newDoritoGame, solveDoritoGames); //gå vänster
+            if (newRow+1 < newDoritoGame.getNrOfRows()) doStep(1,newRow+1, newCol, newDoritoGame, solvedDoritoGames); //gå uppåt
+            if (newCol+1 < newDoritoGame.getNrOfColumns()) doStep(2,newRow, newCol+1, newDoritoGame, solvedDoritoGames); //gå höger
+            //go(3,newRow-1, newCol, newDoritoGame, solvedDoritoGames); //gå neråt
+            if (newCol-1 > -1) doStep(4,newRow, newCol-1, newDoritoGame, solvedDoritoGames); //gå vänster
 
         } else if (commingFrom == 3) { //came from up
 
@@ -73,7 +76,7 @@ public class DoritoSolverService {
             if ((newRow == newDoritoGame.getNrOfRows() - 1) && (newCol == newDoritoGame.getNrOfColumns() - 1)) {
                 //Solution found
                 if (isAcceptedDoritoGame(newDoritoGame)) {
-                    solveDoritoGames.add(newDoritoGame);
+                    solvedDoritoGames.add(newDoritoGame);
                 }
                 return;
             }
@@ -87,10 +90,10 @@ public class DoritoSolverService {
 	3 överifrån
 	4 högerifrån
      */
-            //go(1,newRow+1, newCol, newDoritoGame, solveDoritoGames); //gå uppåt
-            if (newCol+1 < newDoritoGame.getNrOfColumns()) go(2,newRow, newCol+1, newDoritoGame, solveDoritoGames); //gå höger
-            if (newRow-1 > -1) go(3,newRow-1, newCol, newDoritoGame, solveDoritoGames); //gå neråt
-            if (newCol-1 > -1) go(4,newRow, newCol-1, newDoritoGame, solveDoritoGames); //gå vänster
+            //go(1,newRow+1, newCol, newDoritoGame, solvedDoritoGames); //gå uppåt
+            if (newCol+1 < newDoritoGame.getNrOfColumns()) doStep(2,newRow, newCol+1, newDoritoGame, solvedDoritoGames); //gå höger
+            if (newRow-1 > -1) doStep(3,newRow-1, newCol, newDoritoGame, solvedDoritoGames); //gå neråt
+            if (newCol-1 > -1) doStep(4,newRow, newCol-1, newDoritoGame, solvedDoritoGames); //gå vänster
 
         } else if (commingFrom == 2) { //came from left
 
@@ -100,7 +103,7 @@ public class DoritoSolverService {
             if ((newRow == newDoritoGame.getNrOfRows() - 1) && (newCol == newDoritoGame.getNrOfColumns() - 1)) {
                 //Solution found
                 if (isAcceptedDoritoGame(newDoritoGame)) {
-                    solveDoritoGames.add(newDoritoGame);
+                    solvedDoritoGames.add(newDoritoGame);
                 }
                 return;
             }
@@ -114,11 +117,11 @@ public class DoritoSolverService {
 	3 överifrån
 	4 högerifrån
      */
-            if (newRow+1 < newDoritoGame.getNrOfRows()) go(1,newRow+1, newCol, newDoritoGame, solveDoritoGames); //gå uppåt
+            if (newRow+1 < newDoritoGame.getNrOfRows()) doStep(1,newRow+1, newCol, newDoritoGame, solvedDoritoGames); //gå uppåt
 
-            if (newCol+1 < newDoritoGame.getNrOfColumns()) go(2,newRow, newCol+1, newDoritoGame, solveDoritoGames); //gå höger
-            if (newRow-1 > -1) go(3,newRow-1, newCol, newDoritoGame, solveDoritoGames); //gå neråt
-           // go(4,newRow, newCol-1, newDoritoGame, solveDoritoGames); //gå vänster
+            if (newCol+1 < newDoritoGame.getNrOfColumns()) doStep(2,newRow, newCol+1, newDoritoGame, solvedDoritoGames); //gå höger
+            if (newRow-1 > -1) doStep(3,newRow-1, newCol, newDoritoGame, solvedDoritoGames); //gå neråt
+           // go(4,newRow, newCol-1, newDoritoGame, solvedDoritoGames); //gå vänster
 
         } else if (commingFrom == 4) { //came from right
 
@@ -128,7 +131,7 @@ public class DoritoSolverService {
             if ((newRow == newDoritoGame.getNrOfRows() - 1) && (newCol == newDoritoGame.getNrOfColumns() - 1)) {
                 //Solution found
                 if (isAcceptedDoritoGame(newDoritoGame)) {
-                    solveDoritoGames.add(newDoritoGame);
+                    solvedDoritoGames.add(newDoritoGame);
                 }
                 return;
             }
@@ -142,10 +145,10 @@ public class DoritoSolverService {
 	3 överifrån
 	4 högerifrån
      */
-            if (newRow+1 < newDoritoGame.getNrOfRows()) go(1,newRow+1, newCol, newDoritoGame, solveDoritoGames); //gå uppåt
-            //go(2,newRow, newCol+1, newDoritoGame, solveDoritoGames); //gå höger
-            if (newRow-1 > -1) go(3,newRow-1, newCol, newDoritoGame, solveDoritoGames); //gå neråt
-            if (newCol-1 > -1) go(4,newRow, newCol-1, newDoritoGame, solveDoritoGames); //gå vänster
+            if (newRow+1 < newDoritoGame.getNrOfRows()) doStep(1,newRow+1, newCol, newDoritoGame, solvedDoritoGames); //gå uppåt
+            //go(2,newRow, newCol+1, newDoritoGame, solvedDoritoGames); //gå höger
+            if (newRow-1 > -1) doStep(3,newRow-1, newCol, newDoritoGame, solvedDoritoGames); //gå neråt
+            if (newCol-1 > -1) doStep(4,newRow, newCol-1, newDoritoGame, solvedDoritoGames); //gå vänster
 
         }
 
@@ -154,7 +157,7 @@ public class DoritoSolverService {
     private DoritoGame copyOldGame(DoritoGame oldDoritoGame) {
 
         DoritoGame newDoritoGame = new DoritoGame();
-        newDoritoGame.setNrOfBlackBoxes(oldDoritoGame.getNrOfBlackBoxes());
+        newDoritoGame.setNrOfBlackBoxesInt(oldDoritoGame.getNrOfBlackBoxesInt());
         newDoritoGame.setNrOfRows(oldDoritoGame.getNrOfRows());
         newDoritoGame.setNrOfColumns(oldDoritoGame.getNrOfColumns());
         Box[][] newBoxes = new Box[oldDoritoGame.getNrOfRows()][oldDoritoGame.getNrOfColumns()];
