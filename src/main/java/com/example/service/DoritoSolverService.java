@@ -4,7 +4,9 @@ import com.example.domain.Box;
 import com.example.domain.ColorEnum;
 import com.example.domain.DirectionEnum;
 import com.example.domain.DoritoGame;
+import com.example.exception.ApiError;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -70,6 +72,8 @@ public class DoritoSolverService {
             if (newRow+1 < newDoritoGame.getNrOfRows()) doStep(DirectionEnum.DOWN,newRow+1, newCol, newDoritoGame, solvedDoritoGames); //go up
             if (newRow-1 > -1) doStep(DirectionEnum.UP,newRow-1, newCol, newDoritoGame, solvedDoritoGames); //go down
             if (newCol-1 > -1) doStep(DirectionEnum.RIGHT,newRow, newCol-1, newDoritoGame, solvedDoritoGames); //go left
+        } else {
+            throw new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Will not happen");
         }
 
     }
