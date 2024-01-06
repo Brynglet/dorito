@@ -27,7 +27,7 @@ public class DoritoGame {
         for (int i = 0; i < this.getNrOfRows(); i++) {
             for (int k = 0; k < this.getNrOfColumns(); k++) {
                 Box box = new Box();
-                box.setColor(initBoxColor(i, k));
+                box.setColorEnum(initBoxColor(i, k));
                 box.setNrOfTriangles(initNrOfTrianlges(i, k));
                 boxes[i][k] = box;
             }
@@ -99,16 +99,13 @@ public class DoritoGame {
         return 0;
     }
 
-    private int initBoxColor(int i, int k) {
+    private ColorEnum initBoxColor(int i, int k) {
         if (i % 2 != 0 && k % 2 != 0) {
-            return 1;
-            //return "black";
+            return ColorEnum.BLACK;
         }
         if (i % 2 == 0 && k % 2 == 0) {
-            return 2;
-            //return "grey"; //beslutsruta
+            return ColorEnum.GREY;
         }
-        return 3;
-        //return "coral"; //faktiska strecken
+        return ColorEnum.CORAL;
     }
 }

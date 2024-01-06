@@ -28,6 +28,7 @@ public class DoritoController {
     @GetMapping("/dorito/{nrOfBlackBoxes}")
     public String theStart(HttpServletRequest request, @PathVariable(value = "nrOfBlackBoxes") String nrOfBlackBoxes) {
         try {
+            log.info("----------------------------------------");
             log.info("theStart " + nrOfBlackBoxes);
             DoritoGame initialDoritoGame = new DoritoGame(nrOfBlackBoxes);
             List<DoritoGame> solvedDoritoGames = doritoSolverService.solveDoritoGame(initialDoritoGame);

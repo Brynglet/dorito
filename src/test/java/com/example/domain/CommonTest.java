@@ -86,7 +86,7 @@ public class CommonTest {
             for (int k = 0; k < columns; k++) {
                 //System.out.println("kalle4");
                 Box box = new Box();
-                box.setColor(getInitTheColor(i, k));
+                box.setColorEnum(getInitTheColor(i, k));
                 boxes[i][k] = box;
             }
 
@@ -101,7 +101,7 @@ public class CommonTest {
             for (int k = 0; k <columns ; k++) {
                 //System.out.println("kalle7");
                 //System.out.println("row" + i + " column" + k);
-                System.out.print(" " + boxes[i][k].getColor());
+                System.out.print(" " + boxes[i][k].getColorEnum());
             }
 
         }
@@ -110,17 +110,14 @@ public class CommonTest {
 
     }
 
-    private int getInitTheColor(int i, int k) {
-
-        if (i%2 != 0 && k%2 != 0) {
-            return 1; //black
+    private ColorEnum getInitTheColor(int i, int k) {
+        if (i % 2 != 0 && k % 2 != 0) {
+            return ColorEnum.BLACK;
         }
-
-        if (i%2 == 0 && k%2 == 0) {
-            return 2;  //grey
+        if (i % 2 == 0 && k % 2 == 0) {
+            return ColorEnum.GREY;
         }
-
-        return 3; //coral
+        return ColorEnum.CORAL;
     }
 
     @Test

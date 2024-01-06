@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.domain.Box;
+import com.example.domain.ColorEnum;
 import com.example.domain.DoritoGame;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,10 @@ public class DoritoService {
         respStr += "<br/><table><tr><td>Solutions:" + solvedDoritoGames.size() + "</td></tr></table><br/>";
 
         if (solvedDoritoGames.size() < 5000) {
-              for (int k = 0; k < solvedDoritoGames.size(); k++) {
-               DoritoGame solvedDoritogame = solvedDoritoGames.get(k);
-               respStr += getResponseString(solvedDoritogame);
-           }
+            for (int k = 0; k < solvedDoritoGames.size(); k++) {
+                DoritoGame solvedDoritogame = solvedDoritoGames.get(k);
+                respStr += getResponseString(solvedDoritogame);
+            }
         }
 
         return respStr;
@@ -38,11 +39,11 @@ public class DoritoService {
             respSb.append("<tr>");
             for (int k = 0; k < doritoGame.getNrOfColumns(); k++) {
                 String theCol = "green";
-                if (boxes[i][k].getColor() == 1) {
+                if (ColorEnum.BLACK.equals(boxes[i][k].getColorEnum())) {
                     theCol = "black";
-                } else   if (boxes[i][k].getColor() == 2) {
+                } else if (ColorEnum.GREY.equals(boxes[i][k].getColorEnum())) {
                     theCol = "grey";
-                }   if (boxes[i][k].getColor() == 3) {
+                } else if (ColorEnum.CORAL.equals(boxes[i][k].getColorEnum())) {
                     theCol = "coral";
                 }
                 String boxColor = "\"" + theCol + "\"";

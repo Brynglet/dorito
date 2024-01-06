@@ -17,7 +17,7 @@ public class Common {
         try {
             nrOfBlackBoxesInt = Integer.parseInt(nrOfBlackBoxes);
 
-            if (nrOfBlackBoxesInt <= 0  || nrOfBlackBoxesInt > 36) {
+            if (nrOfBlackBoxesInt <= 0  || nrOfBlackBoxesInt > MAX_BLACK_BOXES) {
                 throw new ApiError(HttpStatus.BAD_REQUEST, INVALID_INPUT);
             }
         } catch (Exception e) {
