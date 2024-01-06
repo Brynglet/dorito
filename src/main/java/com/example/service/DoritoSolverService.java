@@ -18,9 +18,12 @@ public class DoritoSolverService {
     public List<DoritoGame> solveDoritoGame(DoritoGame doritoGame) {
 
         ZonedDateTime before = ZonedDateTime.now();
+
         List<DoritoGame> solvedDoritoGames = new ArrayList<>();
 
+        //Recurion start
         doStep(DirectionEnum.DOWN, 0, 0, doritoGame, solvedDoritoGames);
+        //Recurion end
 
         Long durationMs = ZonedDateTime.now().toInstant().toEpochMilli() - before.toInstant().toEpochMilli();
 
@@ -89,6 +92,7 @@ public class DoritoSolverService {
             newDoritoGame.setBoxes(newBoxes);
         }
         oldDoritoGame = null;
+
         return newDoritoGame;
     }
 
@@ -168,8 +172,9 @@ public class DoritoSolverService {
     private boolean isAcceptedDoritoGame(DoritoGame doritoGame) {
         for (int i = 0; i < doritoGame.getNrOfRows(); i++) {
             for (int k = 0; k < doritoGame.getNrOfColumns(); k++) {
-                if (ColorEnum.BLACK.equals(doritoGame.getBoxes()[i][k].getColorEnum())) { //black
+                if (ColorEnum.BLACK.equals(doritoGame.getBoxes()[i][k].getColorEnum())) {
                     if (doritoGame.getBoxes()[i][k].getNrOfTriangles() > 0) {
+
                         int visit1 = ColorEnum.GREEN.equals(doritoGame.getBoxes()[i-1][k].getColorEnum()) ? 1 : 0; //under
                         int visit2 = ColorEnum.GREEN.equals(doritoGame.getBoxes()[i+1][k].getColorEnum()) ? 1 : 0; //over
                         int visit3 = ColorEnum.GREEN.equals(doritoGame.getBoxes()[i][k-1].getColorEnum()) ? 1 : 0; //left
@@ -184,7 +189,7 @@ public class DoritoSolverService {
                 }
             }
         }
-        //System.out.println("Solved!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        //System.out.println("Solved!!!!!!");
         return true;
     }
 
