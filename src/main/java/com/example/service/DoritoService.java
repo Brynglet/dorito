@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.example.domain.Common.MAX_SOLUTIONS_PRINT;
+import static com.example.service.DoritoSolverService.RECURSION_COUNT;
 
 @Slf4j
 @Service
@@ -19,6 +20,8 @@ public class DoritoService {
         StringBuilder sb = new StringBuilder();
 
         sb.append(getResponseString(initialDoritoGame));
+
+        sb.append("<br/><table><tr><td>RecursionCount:" + RECURSION_COUNT + "</td></tr></table><br/>");
 
         sb.append("<br/><table><tr><td>Solutions:" + solvedDoritoGames.size() + "</td></tr></table><br/>");
 

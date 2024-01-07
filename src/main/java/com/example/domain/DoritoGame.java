@@ -43,7 +43,7 @@ public class DoritoGame {
         if (i % 2 != 0 && k % 2 != 0) {
 
             boolean theDifficult = false;
-            boolean allZero = false;
+            boolean allZero = true;
             if (theDifficult) {
                 if (i == 1 && k == 1) {
                     return 2;
@@ -104,5 +104,12 @@ public class DoritoGame {
             return ColorEnum.GREY;
         }
         return ColorEnum.CORAL;
+    }
+
+    public void clear() {
+        this.setBoxes(null);
+        this.setNrOfBlackBoxesInt(0);
+        this.setNrOfRows(0);
+        this.setNrOfColumns(0);
     }
 }

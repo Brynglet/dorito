@@ -106,4 +106,54 @@ public class CommonTest {
         double totInSec = tot.doubleValue()/1000;
         System.out.println("totInSec:" + totInSec);
     }
+
+    @Test
+    public void tesCopyOldGame() {
+
+        DoritoGame dg = new DoritoGame("9");
+
+        //DoritoGame dg1 = copyOldGame1(dg);
+        //dg1.getBoxes()[0][0].setColorEnum(ColorEnum.GREEN);
+
+        DoritoGame dg2 = copyOldGame2(dg, 0, 0);
+
+        int k = 0;
+    }
+
+    private DoritoGame copyOldGame1(DoritoGame oldDoritoGame) {
+
+        DoritoGame newDoritoGame = new DoritoGame();
+        newDoritoGame.setNrOfBlackBoxesInt(oldDoritoGame.getNrOfBlackBoxesInt());
+        newDoritoGame.setNrOfRows(oldDoritoGame.getNrOfRows());
+        newDoritoGame.setNrOfColumns(oldDoritoGame.getNrOfColumns());
+        Box[][] newBoxes = new Box[oldDoritoGame.getNrOfRows()][oldDoritoGame.getNrOfColumns()];
+        Box box;
+        for (int i = 0; i < oldDoritoGame.getNrOfRows(); i++) {
+            for (int k = 0; k < oldDoritoGame.getNrOfColumns(); k++) {
+                box = new Box();
+                box.setColorEnum(oldDoritoGame.getBoxes()[i][k].getColorEnum());
+                box.setNrOfTriangles(oldDoritoGame.getBoxes()[i][k].getNrOfTriangles());
+                newBoxes[i][k] = box;
+            }
+            newDoritoGame.setBoxes(newBoxes);
+        }
+        oldDoritoGame = null;
+
+        return newDoritoGame;
+    }
+
+    private DoritoGame copyOldGame2(DoritoGame oldDoritoGame, int newRow, int newCol) {
+
+        DoritoGame newDoritoGame = new DoritoGame();
+        newDoritoGame.setNrOfBlackBoxesInt(oldDoritoGame.getNrOfBlackBoxesInt());
+        newDoritoGame.setNrOfRows(oldDoritoGame.getNrOfRows());
+        newDoritoGame.setNrOfColumns(oldDoritoGame.getNrOfColumns());
+        Box[][] boxes = oldDoritoGame.getBoxes();
+        newDoritoGame.setBoxes(boxes);
+        newDoritoGame.getBoxes()[newRow][newCol].setColorEnum(ColorEnum.GREEN);
+
+        oldDoritoGame = null;
+
+        return newDoritoGame;
+    }
 }

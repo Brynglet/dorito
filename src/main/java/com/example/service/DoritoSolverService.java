@@ -17,6 +17,8 @@ import java.util.List;
 @Service
 public class DoritoSolverService {
 
+    public static Long RECURSION_COUNT = 0L;
+
     public List<DoritoGame> solveDoritoGame(DoritoGame doritoGame) {
 
         ZonedDateTime before = ZonedDateTime.now();
@@ -36,6 +38,8 @@ public class DoritoSolverService {
 
     private void doStep(DirectionEnum cameFrom, int newRow, int newCol, DoritoGame doritoGame, List<DoritoGame> solvedDoritoGames) {
 
+        RECURSION_COUNT++;
+
         //black or visited
         if (ColorEnum.BLACK.equals(doritoGame.getBoxes()[newRow][newCol].getColorEnum()) || ColorEnum.GREEN.equals(doritoGame.getBoxes()[newRow][newCol].getColorEnum())) {
             return;
@@ -44,8 +48,8 @@ public class DoritoSolverService {
         DoritoGame newDoritoGame = copyOldGame(doritoGame);
         newDoritoGame.getBoxes()[newRow][newCol].setColorEnum(ColorEnum.GREEN);
 
-        if ((newRow == newDoritoGame.getNrOfRows() - 1) && (newCol == newDoritoGame.getNrOfColumns() - 1)) {
-            //Solution found
+        if (isAtEndPoint(newDoritoGame, newRow, newCol)) {
+            //Possible solution found
             if (isAcceptedDoritoGame(newDoritoGame)) {
                 solvedDoritoGames.add(newDoritoGame);
             }
@@ -78,12 +82,17 @@ public class DoritoSolverService {
 
     }
 
+    private boolean isAtEndPoint(DoritoGame newDoritoGame, int newRow, int newCol) {
+        return (newRow == newDoritoGame.getNrOfRows() - 1) && (newCol == newDoritoGame.getNrOfColumns() - 1);
+    }
+
     private DoritoGame copyOldGame(DoritoGame oldDoritoGame) {
 
         DoritoGame newDoritoGame = new DoritoGame();
         newDoritoGame.setNrOfBlackBoxesInt(oldDoritoGame.getNrOfBlackBoxesInt());
         newDoritoGame.setNrOfRows(oldDoritoGame.getNrOfRows());
         newDoritoGame.setNrOfColumns(oldDoritoGame.getNrOfColumns());
+        //newDoritoGame.setBoxes(oldDoritoGame.getBoxes()); No because reference affects old with setting it to green
         Box[][] newBoxes = new Box[oldDoritoGame.getNrOfRows()][oldDoritoGame.getNrOfColumns()];
         Box box;
         for (int i = 0; i < oldDoritoGame.getNrOfRows(); i++) {
@@ -95,8 +104,8 @@ public class DoritoSolverService {
             }
             newDoritoGame.setBoxes(newBoxes);
         }
-        oldDoritoGame = null;
 
+        //oldDoritoGame.clear(); This causes npe!
         return newDoritoGame;
     }
 
