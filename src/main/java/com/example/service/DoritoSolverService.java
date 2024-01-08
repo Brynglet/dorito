@@ -15,25 +15,33 @@ import java.util.List;
 public class DoritoSolverService {
 
     public static Long RECURSION_COUNT = 0L;
-
+    public static Long SOLUTION_COUNT = 0L;
     public List<DoritoGame> solveDoritoGame(DoritoGame doritoGame) {
+
+        RECURSION_COUNT = 0L;
 
         ZonedDateTime before = ZonedDateTime.now();
 
         List<DoritoGame> solvedDoritoGames = new ArrayList<>();
 
         //Recursion start
-        doStep(0, 0, doritoGame, solvedDoritoGames);
+        doStep(0, 0, doritoGame);
         //Recursion end
 
         Long durationMs = ZonedDateTime.now().toInstant().toEpochMilli() - before.toInstant().toEpochMilli();
 
+        log.info("recursion time ms:" + durationMs);
+
         log.info("recursion time:" + (durationMs.doubleValue() / 1000) + " seconds");
 
+        log.info("SOLUTION_COUNT:" + SOLUTION_COUNT);
+        log.info("RECURSION_COUNT:" + RECURSION_COUNT);
         return solvedDoritoGames;
     }
 
-    private void doStep(int newRow, int newCol, DoritoGame doritoGame, List<DoritoGame> solvedDoritoGames) {
+    private void doStep(int newRow, int newCol, DoritoGame doritoGame) {
+
+        if (SOLUTION_COUNT > 0) return; // Found at least 1 solution
 
         RECURSION_COUNT++;
 
@@ -48,7 +56,7 @@ public class DoritoSolverService {
         if (isAtEndPoint(newDoritoGame, newRow, newCol)) {
             //Possible solution found
             if (isAcceptedDoritoGame(newDoritoGame)) {
-                solvedDoritoGames.add(newDoritoGame);
+                SOLUTION_COUNT++;
             }
             return;
         }
@@ -58,18 +66,19 @@ public class DoritoSolverService {
         }
 
         if (canGoUp(newDoritoGame, newRow, newCol)) {
-            doStep(newRow+1, newCol, newDoritoGame, solvedDoritoGames);
+            doStep(newRow+1, newCol, newDoritoGame);
         }
         if (canGoRight(newDoritoGame, newRow, newCol)) {
-            doStep(newRow, newCol+1, newDoritoGame, solvedDoritoGames);
+            doStep(newRow, newCol+1, newDoritoGame);
         }
         if (canGoLeft(newDoritoGame, newRow, newCol)) {
-            doStep(newRow, newCol-1, newDoritoGame, solvedDoritoGames);
+            doStep(newRow, newCol-1, newDoritoGame);
         }
         if (canGoDown(newDoritoGame, newRow, newCol)) {
-            doStep(newRow-1, newCol, newDoritoGame, solvedDoritoGames);
+            doStep(newRow-1, newCol, newDoritoGame);
         }
-
+        newDoritoGame.clear();
+        newDoritoGame = null;
     }
 
     private boolean canGoUp(DoritoGame newDoritoGame, int newRow, int newCol) {
