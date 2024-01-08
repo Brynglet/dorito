@@ -82,20 +82,21 @@ public class DoritoSolverService {
     }
 
     private boolean canGoUp(DoritoGame newDoritoGame, int newRow, int newCol) {
-        //if (newRow+1 < newDoritoGame.getNrOfRows()) doStep(newRow+1, newCol, newDoritoGame, solvedDoritoGames); //go up
         boolean nextnextGreen = (newRow+2 < newDoritoGame.getNrOfRows() && ColorEnum.GREEN.equals(newDoritoGame.getBoxes()[newRow+2][newCol].getColorEnum()));
         return !nextnextGreen && (newRow+1 < newDoritoGame.getNrOfRows()) && (!ColorEnum.GREEN.equals(newDoritoGame.getBoxes()[newRow+1][newCol].getColorEnum()));
     }
+
     private boolean canGoRight(DoritoGame newDoritoGame, int newRow, int newCol) {
-        //if (newCol+1 < newDoritoGame.getNrOfColumns()) doStep(newRow, newCol+1, newDoritoGame, solvedDoritoGames); //go right
         boolean nextnextGreen = (newCol+2 < newDoritoGame.getNrOfColumns()) && (ColorEnum.GREEN.equals(newDoritoGame.getBoxes()[newRow][newCol+2].getColorEnum()));
         return !nextnextGreen && (newCol+1 < newDoritoGame.getNrOfColumns()) && (!ColorEnum.GREEN.equals(newDoritoGame.getBoxes()[newRow][newCol+1].getColorEnum()));
-    }  private boolean canGoLeft(DoritoGame newDoritoGame, int newRow, int newCol) {
-        //if (newCol-1 > -1) doStep(newRow, newCol-1, newDoritoGame, solvedDoritoGames); //go left
+    }
+
+    private boolean canGoLeft(DoritoGame newDoritoGame, int newRow, int newCol) {
         boolean nextnextGreen = (newCol-2 > -1) && (ColorEnum.GREEN.equals(newDoritoGame.getBoxes()[newRow][newCol-2].getColorEnum()));
         return !nextnextGreen && (newCol-1 > -1) && (!ColorEnum.GREEN.equals(newDoritoGame.getBoxes()[newRow][newCol-1].getColorEnum()));
-    }  private boolean canGoDown(DoritoGame newDoritoGame, int newRow, int newCol) {
-        //if (newRow-1 > -1) doStep(newRow-1, newCol, newDoritoGame, solvedDoritoGames); //go down
+    }
+
+    private boolean canGoDown(DoritoGame newDoritoGame, int newRow, int newCol) {
         boolean nextnextGreen = (newRow-2 > -1) && (ColorEnum.GREEN.equals(newDoritoGame.getBoxes()[newRow-2][newCol].getColorEnum()));
         return !nextnextGreen && (newRow-1 > -1) && (!ColorEnum.GREEN.equals(newDoritoGame.getBoxes()[newRow-1][newCol].getColorEnum()));
     }
