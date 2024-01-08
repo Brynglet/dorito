@@ -13,14 +13,10 @@ public class CommonTest {
 
 
         /*
-
-        Doritpgame with 3 boxes * 3 boxes has 24 possible dashes. Srart and end are excluded
-        1: 4
-2: 12
-3: 24
-4: 40
-
-+4 +8 +12 + 16
+http://localhost:8080/dorito/4
+http://localhost:8080/dorito/9
+http://localhost:8080/dorito/16
+http://localhost:8080/dorito/25
          */
 
         int dorLen = 1;
