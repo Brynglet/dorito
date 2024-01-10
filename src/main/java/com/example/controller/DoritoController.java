@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 import static com.example.service.DoritoSolverService.RECURSION_COUNT;
+import static com.example.service.DoritoSolverService.SOLUTION_COUNT;
 
 @Slf4j
 @Controller
@@ -31,6 +32,7 @@ public class DoritoController {
     public String theStart(HttpServletRequest request, @PathVariable(value = "nrOfBlackBoxes") String nrOfBlackBoxes) {
         try {
             RECURSION_COUNT = 0L;
+            SOLUTION_COUNT = 0L;
             log.info("----------------------------------------");
             log.info("theStart " + nrOfBlackBoxes);
             DoritoGame initialDoritoGame = new DoritoGame(nrOfBlackBoxes);

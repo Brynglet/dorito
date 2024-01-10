@@ -26,7 +26,7 @@ public class DoritoService {
 
         sb.append("<br/><table><tr><td>RecursionCount:" + RECURSION_COUNT + "</td></tr></table><br/>");
 
-        sb.append("<br/><table><tr><td>Solutions:" + solvedDoritoGames.size() + "</td></tr></table><br/>");
+        //sb.append("<br/><table><tr><td>Solutions:" + solvedDoritoGames.size() + "</td></tr></table><br/>");
 
         if (solvedDoritoGames.size() < MAX_SOLUTIONS_PRINT) {
             for (DoritoGame solvedDoritogame : solvedDoritoGames) {
