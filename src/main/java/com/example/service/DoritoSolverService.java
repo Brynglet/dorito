@@ -41,7 +41,7 @@ public class DoritoSolverService {
 
     private void doStep(int newRow, int newCol, DoritoGame doritoGame) {
 
-        if (SOLUTION_COUNT > 0) return; // Found at least 1 solution
+        //if (SOLUTION_COUNT > 0) return; // Found at least 1 solution
 
         RECURSION_COUNT++;
 
@@ -93,12 +93,14 @@ public class DoritoSolverService {
 
     private boolean canGoLeft(DoritoGame newDoritoGame, int newRow, int newCol) {
         boolean nextnextGreen = (newCol-2 > -1) && (ColorEnum.GREEN.equals(newDoritoGame.getBoxes()[newRow][newCol-2].getColorEnum()));
-        return !nextnextGreen && (newCol-1 > -1) && (!ColorEnum.GREEN.equals(newDoritoGame.getBoxes()[newRow][newCol-1].getColorEnum()));
+        boolean bottomRowOrTopRow = newRow == 0 || newRow == newDoritoGame.getNrOfRows() - 1; //no possible solutions when going left here
+        return !bottomRowOrTopRow && !nextnextGreen && (newCol-1 > -1) && (!ColorEnum.GREEN.equals(newDoritoGame.getBoxes()[newRow][newCol-1].getColorEnum()));
     }
 
     private boolean canGoDown(DoritoGame newDoritoGame, int newRow, int newCol) {
         boolean nextnextGreen = (newRow-2 > -1) && (ColorEnum.GREEN.equals(newDoritoGame.getBoxes()[newRow-2][newCol].getColorEnum()));
-        return !nextnextGreen && (newRow-1 > -1) && (!ColorEnum.GREEN.equals(newDoritoGame.getBoxes()[newRow-1][newCol].getColorEnum()));
+        boolean leftestColOrRightestCol = newCol == 0 || newCol == newDoritoGame.getNrOfColumns() - 1; //no possible solutions when going down here
+        return !leftestColOrRightestCol && !nextnextGreen && (newRow-1 > -1) && (!ColorEnum.GREEN.equals(newDoritoGame.getBoxes()[newRow-1][newCol].getColorEnum()));
     }
 
     private boolean isAtEndPoint(DoritoGame newDoritoGame, int newRow, int newCol) {
