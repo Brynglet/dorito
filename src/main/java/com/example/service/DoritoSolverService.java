@@ -65,8 +65,6 @@ public class DoritoSolverService {
             return;
         }
 
-        // Potentiell förbättring ner först.
-
         if (canGoUp(newDoritoGame, newRow, newCol)) {
             doStep(newRow+1, newCol, newDoritoGame);
         }
