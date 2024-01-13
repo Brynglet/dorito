@@ -65,6 +65,8 @@ public class DoritoSolverService {
             return;
         }
 
+        // Potentiell förbättring ner först.
+
         if (canGoUp(newDoritoGame, newRow, newCol)) {
             doStep(newRow+1, newCol, newDoritoGame);
         }
@@ -208,12 +210,10 @@ public class DoritoSolverService {
             for (int k = 0; k < doritoGame.getNrOfColumns(); k++) {
                 if (ColorEnum.BLACK.equals(doritoGame.getBoxes()[i][k].getColorEnum())) {
                     if (doritoGame.getBoxes()[i][k].getNrOfTriangles() > 0) {
-
                         int visit1 = ColorEnum.GREEN.equals(doritoGame.getBoxes()[i-1][k].getColorEnum()) ? 1 : 0; //under
                         int visit2 = ColorEnum.GREEN.equals(doritoGame.getBoxes()[i+1][k].getColorEnum()) ? 1 : 0; //over
                         int visit3 = ColorEnum.GREEN.equals(doritoGame.getBoxes()[i][k-1].getColorEnum()) ? 1 : 0; //left
                         int visit4 = ColorEnum.GREEN.equals(doritoGame.getBoxes()[i][k+1].getColorEnum()) ? 1 : 0; //right
-
                         int sum = visit1 + visit2 + visit3 + visit4;
                         if (sum != doritoGame.getBoxes()[i][k].getNrOfTriangles()) {
                             //System.out.println("Not solved :(");
