@@ -28,6 +28,7 @@ public class DoritoController {
         this.doritoSolverService = doritoSolverService;
     }
 
+    // Finds nr of solutions without printing them out
     @GetMapping("/dorito/{nrOfBlackBoxes}")
     public String theStart(HttpServletRequest request, @PathVariable(value = "nrOfBlackBoxes") String nrOfBlackBoxes) {
         try {
@@ -36,7 +37,26 @@ public class DoritoController {
             log.info("----------------------------------------");
             log.info("theStart " + nrOfBlackBoxes);
             DoritoGame initialDoritoGame = new DoritoGame(nrOfBlackBoxes);
-            List<DoritoGame> solvedDoritoGames = doritoSolverService.solveDoritoGame(initialDoritoGame);
+            List<DoritoGame> solvedDoritoGames = doritoSolverService.solveDoritoGame(initialDoritoGame, false);
+            String response = doritoService.getDoritoResponse(initialDoritoGame, solvedDoritoGames);
+            request.setAttribute("doritoTables", response);
+            return "dorito"; // Sends to dorito.jsp
+        } catch (Exception e) {
+            log.error("ERR theStart!:" +  e.getMessage());
+            throw new RuntimeException("ajaxGames Error:" + e.getMessage());
+        }
+    }
+
+    // Finds nr of solutions and printing them out
+    @GetMapping("/dorito/print/{nrOfBlackBoxes}")
+    public String theStartPrint(HttpServletRequest request, @PathVariable(value = "nrOfBlackBoxes") String nrOfBlackBoxes) {
+        try {
+            RECURSION_COUNT = 0L;
+            SOLUTION_COUNT = 0L;
+            log.info("----------------------------------------");
+            log.info("theStartPrint " + nrOfBlackBoxes);
+            DoritoGame initialDoritoGame = new DoritoGame(nrOfBlackBoxes);
+            List<DoritoGame> solvedDoritoGames = doritoSolverService.solveDoritoGame(initialDoritoGame, true);
             String response = doritoService.getDoritoResponse(initialDoritoGame, solvedDoritoGames);
             request.setAttribute("doritoTables", response);
             return "dorito"; // Sends to dorito.jsp

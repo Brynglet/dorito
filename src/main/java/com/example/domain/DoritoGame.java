@@ -43,8 +43,10 @@ public class DoritoGame {
         if (i % 2 != 0 && k % 2 != 0) {
 
             boolean theDifficult = false;
-            boolean allZero = true;
+            boolean allZero = false;
+
             if (theDifficult) {
+
                 if (i == 1 && k == 1) {
                     return 2;
                 }
@@ -82,6 +84,7 @@ public class DoritoGame {
 
             if (allZero) return 0;
 
+            // Randomize
             int randNumber = (int) (Math.random() * 100); //0-99
 
             if (randNumber < 23) {
@@ -93,6 +96,7 @@ public class DoritoGame {
             }
 
         }
+
         return 0;
     }
 

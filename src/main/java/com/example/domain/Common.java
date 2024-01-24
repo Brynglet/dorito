@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Common {
 
-    public static final Integer MAX_SOLUTIONS_PRINT = 5000;
+    public static final Integer MAX_SOLUTIONS_PRINT = 9000;
 
     public static final Integer MAX_BLACK_BOXES = 36;
 

@@ -16,21 +16,23 @@ public class DoritoSolverService {
 
     public static Long RECURSION_COUNT = 0L;
     public static Long SOLUTION_COUNT = 0L;
-    public List<DoritoGame> solveDoritoGame(DoritoGame doritoGame) {
+    public List<DoritoGame> solveDoritoGame(DoritoGame doritoGame, boolean doPrint) {
 
         RECURSION_COUNT = 0L;
 
         ZonedDateTime before = ZonedDateTime.now();
 
-        List<DoritoGame> solvedDoritoGames = new ArrayList<>();
-
+        List<DoritoGame> solvedDoritoGames = null;
+        if (doPrint) {
+            solvedDoritoGames = new ArrayList<>();
+        }
         //Recursion start
-        doStep(0, 0, doritoGame);
+        doStep(0, 0, doritoGame, solvedDoritoGames);
         //Recursion end
 
         Long durationMs = ZonedDateTime.now().toInstant().toEpochMilli() - before.toInstant().toEpochMilli();
 
-        log.info("recursion time ms:" + durationMs);
+        log.info("recursion time:" + durationMs + " ms");
 
         log.info("recursion time:" + (durationMs.doubleValue() / 1000) + " seconds");
 
@@ -39,7 +41,7 @@ public class DoritoSolverService {
         return solvedDoritoGames;
     }
 
-    private void doStep(int newRow, int newCol, DoritoGame doritoGame) {
+    private void doStep(int newRow, int newCol, DoritoGame doritoGame, List<DoritoGame> solvedDoritoGames) {
 
         //if (SOLUTION_COUNT > 0) return; // Found at least 1 solution
 
@@ -57,6 +59,10 @@ public class DoritoSolverService {
             //Possible solution found
             if (isAcceptedDoritoGame(newDoritoGame)) {
                 SOLUTION_COUNT++;
+                if (solvedDoritoGames != null) {
+                    //for print endpoint
+                    solvedDoritoGames.add(newDoritoGame);
+                }
             }
             return;
         }
@@ -66,16 +72,16 @@ public class DoritoSolverService {
         }
 
         if (canGoUp(newDoritoGame, newRow, newCol)) {
-            doStep(newRow+1, newCol, newDoritoGame);
+            doStep(newRow+1, newCol, newDoritoGame, solvedDoritoGames);
         }
         if (canGoRight(newDoritoGame, newRow, newCol)) {
-            doStep(newRow, newCol+1, newDoritoGame);
+            doStep(newRow, newCol+1, newDoritoGame, solvedDoritoGames);
         }
         if (canGoLeft(newDoritoGame, newRow, newCol)) {
-            doStep(newRow, newCol-1, newDoritoGame);
+            doStep(newRow, newCol-1, newDoritoGame, solvedDoritoGames);
         }
         if (canGoDown(newDoritoGame, newRow, newCol)) {
-            doStep(newRow-1, newCol, newDoritoGame);
+            doStep(newRow-1, newCol, newDoritoGame, solvedDoritoGames);
         }
         newDoritoGame.clear();
         newDoritoGame = null;
