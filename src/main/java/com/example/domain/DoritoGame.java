@@ -1,8 +1,10 @@
 package com.example.domain;
 
+import com.example.exception.ApiError;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 
 @Data
 @Slf4j
@@ -26,64 +28,82 @@ public class DoritoGame {
 
         Box[][] boxes = new Box[this.getNrOfRows()][this.getNrOfColumns()];
 
-        for (int i = 0; i < this.getNrOfRows(); i++) {
-            for (int k = 0; k < this.getNrOfColumns(); k++) {
+        for (int r = 0; r < this.getNrOfRows(); r++) {
+            for (int c = 0; c < this.getNrOfColumns(); c++) {
                 Box box = new Box();
-                box.setColorEnum(initBoxColor(i, k));
-                box.setNrOfTriangles(initNrOfTriangles(i, k));
-                boxes[i][k] = box;
+                box.setColorEnum(initBoxColor(r, c));
+                box.setNrOfTriangles(initNrOfTriangles(r, c));
+                boxes[r][c] = box;
             }
         }
 
         this.setBoxes(boxes);
     }
 
-    private int initNrOfTriangles(int i, int k) {
+    private int initNrOfTriangles(int r, int c) {
 
-        if (i % 2 != 0 && k % 2 != 0) {
+        boolean theDifficult = false;
+        boolean allZeros = false;
+        boolean randomize = true;
 
-            boolean theDifficult = false;
-            boolean allZero = false;
+        if (theDifficult) {
+            return getTheDifficult(r, c);
+        } else if (allZeros) {
+            return getAllZeros();
+        }  else if (randomize) {
+            return getRandom(r, c);
+        } else {
+            throw new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Must chose a blackBoxTemplate");
+        }
+    }
 
-            if (theDifficult) {
+    //Just a diffult one to solve for a human
+    private int getTheDifficult(int r, int c) {
 
-                if (i == 1 && k == 1) {
-                    return 2;
-                }
+        if (r % 2 != 0 && c % 2 != 0) {
 
-                if (i == 7 && k == 1) {
-                    return 2;
-                }
-
-                if (i == 3 && k == 3) {
-                    return 1;
-                }
-
-                if (i == 5 && k == 3) {
-                    return 1;
-                }
-
-                if (i == 7 && k == 3) {
-                    return 1;
-                }
-
-                if (i == 1 && k == 7) {
-                    return 2;
-                }
-
-                if (i == 5 && k == 7) {
-                    return 2;
-                }
-
-                if (i == 7 && k == 7) {
-                    return 2;
-                }
-
-                if (true) return 0;
+            if (r == 1 && c == 1) {
+                return 2;
             }
 
-            if (allZero) return 0;
+            if (r == 7 && c == 1) {
+                return 2;
+            }
 
+            if (r == 3 && c == 3) {
+                return 1;
+            }
+
+            if (r == 5 && c == 3) {
+                return 1;
+            }
+
+            if (r == 7 && c == 3) {
+                return 1;
+            }
+
+            if (r == 1 && c == 7) {
+                return 2;
+            }
+
+            if (r == 5 && c == 7) {
+                return 2;
+            }
+
+            if (r == 7 && c == 7) {
+                return 2;
+            }
+
+        }
+        return 0;
+    }
+
+    private int getAllZeros() {
+        return 0;
+    }
+
+    private int getRandom(int r, int c) {
+        if (r % 2 != 0 && c % 2 != 0) {
             // Randomize
             int randNumber = (int) (Math.random() * 100); //0-99
 
@@ -94,17 +114,15 @@ public class DoritoGame {
             } else if (randNumber < 34) {
                 return 3;
             }
-
         }
-
         return 0;
     }
 
-    private ColorEnum initBoxColor(int i, int k) {
-        if (i % 2 != 0 && k % 2 != 0) {
+    private ColorEnum initBoxColor(int r, int c) {
+        if (r % 2 != 0 && c % 2 != 0) {
             return ColorEnum.BLACK;
         }
-        if (i % 2 == 0 && k % 2 == 0) {
+        if (r % 2 == 0 && c % 2 == 0) {
             return ColorEnum.GREY;
         }
         return ColorEnum.CORAL;

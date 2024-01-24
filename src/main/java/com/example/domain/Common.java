@@ -11,7 +11,7 @@ public class Common {
 
     public static final Integer MAX_BLACK_BOXES = 36;
 
-    public static final String INVALID_INPUT = "Invalid input. Must be a square nr and below " + MAX_BLACK_BOXES;
+    public static final String INVALID_INPUT = "Invalid input. Must be a square nr and <= " + MAX_BLACK_BOXES;
 
     public static void validateInput(String nrOfBlackBoxes) throws ApiError{
 
