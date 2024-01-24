@@ -16,6 +16,7 @@ public class DoritoSolverService {
 
     public static Long RECURSION_COUNT = 0L;
     public static Long SOLUTION_COUNT = 0L;
+
     public List<DoritoGame> solveDoritoGame(DoritoGame doritoGame, boolean doPrint) {
 
         RECURSION_COUNT = 0L;
@@ -26,6 +27,7 @@ public class DoritoSolverService {
         if (doPrint) {
             solvedDoritoGames = new ArrayList<>();
         }
+
         //Recursion start
         doStep(0, 0, doritoGame, solvedDoritoGames);
         //Recursion end
