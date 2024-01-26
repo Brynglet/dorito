@@ -43,7 +43,7 @@ public class DoritoController {
             return "dorito"; // Sends to dorito.jsp
         } catch (Exception e) {
             log.error("ERR theStart!:" +  e.getMessage());
-            throw new RuntimeException("ajaxGames Error:" + e.getMessage());
+            throw new RuntimeException("theStart Error:" + e.getMessage());
         }
     }
 
@@ -61,8 +61,8 @@ public class DoritoController {
             request.setAttribute("doritoTables", response);
             return "dorito"; // Sends to dorito.jsp
         } catch (Exception e) {
-            log.error("ERR theStart!:" +  e.getMessage());
-            throw new RuntimeException("ajaxGames Error:" + e.getMessage());
+            log.error("ERR theStartPrint!:" +  e.getMessage());
+            throw new RuntimeException("theStartPrint Error:" + e.getMessage());
         }
     }
 }
