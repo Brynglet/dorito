@@ -49,8 +49,6 @@ public class DoritoGame {
 
         if (theDifficult) {
             return getTheDifficult(r, c);
-        } else if (theDifficult2) {
-            return getTheDifficult2();
         } else if (allZeros) {
             return getAllZeros();
         }  else if (randomize) {
@@ -96,16 +94,6 @@ public class DoritoGame {
             if (r == 7 && c == 7) {
                 return 2;
             }
-
-        }
-        return 0;
-    }
-
-    private int getTheDifficult2(int r, int c) {
-
-        if (r % 2 != 0 && c % 2 != 0) {
-
-            ...fixa
 
         }
         return 0;
