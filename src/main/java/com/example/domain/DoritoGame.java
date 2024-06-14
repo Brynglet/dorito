@@ -43,9 +43,8 @@ public class DoritoGame {
     private int initNrOfTriangles(int r, int c) {
 
         boolean theDifficult = false;
-        boolean theDifficult2 = true;
         boolean allZeros = false;
-        boolean randomize = false;
+        boolean randomize = true;
 
         if (theDifficult) {
             return getTheDifficult(r, c);
